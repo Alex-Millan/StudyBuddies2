@@ -10,4 +10,5 @@
     <string name="LoginText">Login</string>
     <string name="title_activity_upload_data">UploadData</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
