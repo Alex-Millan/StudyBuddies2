@@ -1,3 +1,13 @@
 <resources>
-    <string name="app_name">StudyBuddies</string>
+    <string name="app_name">DataBaseDemo</string>
+    <string name="SignUP">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="auth_failed">Sign up Failed</string>
+    <string name="auth_success">Sign up SUCCESSS</string>
+    <string name="SignIn">Sign In</string>
+    <string name="createAccount">Create Account</string>
+    <string name="LoginText">Login</string>
+    <string name="title_activity_upload_data">UploadData</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 </resources>

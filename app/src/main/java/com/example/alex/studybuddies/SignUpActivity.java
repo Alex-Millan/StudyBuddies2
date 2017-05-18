@@ -1,9 +1,11 @@
 package com.example.alex.studybuddies;
 
-import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -15,44 +17,28 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     private FirebaseAuth.AuthStateListener mAuthListener;
-    private String TAG = "WHYFAILTHO";
+    private String TAG = "SIGNUPACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_up);
         authenticating();
-
-
-
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            //    mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    public void onSignIn(View v) {
-
+    public void onSignUp(View V) {
         EditText userEmail  = (EditText) findViewById(R.id.userEmail);
         EditText userPassword = (EditText) findViewById(R.id.userPassword);
 
+
+
+
         String email = userEmail.getText().toString();
         String password = userPassword.getText().toString();
-
         if (email.matches("")) {
             Toast.makeText(this, "You did not enter a username", Toast.LENGTH_SHORT).show();
             return;
@@ -61,21 +47,26 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-
-        mAuth.signInWithEmailAndPassword(email, password)
+        mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        //loggedIn();
+                        Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(SignUpActivity.this, R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        if (task.isSuccessful()) {
+                            Toast.makeText(SignUpActivity.this, R.string.auth_success,
+                                    Toast.LENGTH_SHORT).show();
+                        }
                         // ...
                     }
                 });
-        // If sign in fails, display a message to the user. If sign in succeeds
-        // the auth state listener will be notified and logic to handle the
-        // signed in user can be handled in the listener.
-        authenticating();
     }
 
     public void authenticating() {
@@ -88,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    //loggedIn();
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -97,24 +87,4 @@ public class MainActivity extends AppCompatActivity {
             }
         };
     }
-
-
-    public void onSignUp(View V) {
-        Intent intent2 = new Intent(this, SignUpActivity.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent2);
-    }
-
-    public void onUploadTest(View V) {
-        //Intent intent2 = new Intent(this, UploadData.class);
-        //intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //startActivity(intent2);
-    }
-
-    private void loggedIn() {
-        //Intent intent = new Intent(this, UploadData.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        //startActivity(intent);
-    }
-
 }
