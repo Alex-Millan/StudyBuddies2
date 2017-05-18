@@ -25,9 +25,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Intent intent2 = new Intent(this, MapsActivity.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent2);
         authenticating();
 
 
@@ -119,6 +116,12 @@ public class MainActivity extends AppCompatActivity {
         //Intent intent = new Intent(this, UploadData.class);
         //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //startActivity(intent);
+    }
+
+    public void GoToMaps(View V){
+        Intent intent2 = new Intent(this, MapsActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent2);
     }
 
 }
