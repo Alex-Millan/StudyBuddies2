@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void GoToMaps(View V){
-        Intent intent2 = new Intent(this, ExperimentActivity.class);
+        Intent intent2 = new Intent(this, MapsActivity.class);
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }
