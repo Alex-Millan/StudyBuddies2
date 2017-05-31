@@ -8,10 +8,11 @@
     <string name="SignIn">Sign In</string>
     <string name="createAccount">Create Account</string>
     <string name="LoginText">Login</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="upload_test">upload Test</string>
-    <string name="dummyText">Attempting to read File</string>
-    <string name="experiment">Testing Code goes here</string>
-    <string name="expButton">Crash</string>
-    <string name="go_to_map">Go To Map</string>
+    <string name="title_activity_upload_data">UploadData</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
+
+    <string name="selectCourseSubject">Course Subject</string>
+    <string name="selectCourseNumber">Course Number</string>
+    <string name="addClassButton">Add Class</string>
+    <string name="subjectSpinnerPrompt">Choose a class subject</string>
 </resources>
