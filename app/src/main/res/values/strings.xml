@@ -16,4 +16,11 @@
     <string name="addClassButton">Add Class</string>
     <string name="subjectSpinnerPrompt">Choose a class subject</string>
     <string name="dummyText">Dumm Text</string>
+    <string name="experiment">experimenting</string>
+    <string name="expButton">CRASH</string>
+    <string name="upload_test">Uploading . . ..</string>
+    <string name="go_to_map">Go to Map</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Title</string>
+    <string name="title_notifications">Notification</string>
 </resources>
