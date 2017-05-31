@@ -21,7 +21,7 @@ import java.io.IOException;
  * Created by Alex on 5/19/2017.
  */
 
-public class ClassInfo {
+class ClassInfo {
 
     static String CLASS_KEY = "class_name";
     static String LONGITUDE_KEY = "longitude";
@@ -31,15 +31,17 @@ public class ClassInfo {
 
 
     private StorageReference mStorageRef;
+    private StorageReference riversRef ;
+
     private String TAG = "UPLOADING . . .";
     //Constructor retrieves data from server
 
-    String temp = "";  //Attempt to return a simple string
+    private String temp = "";  //Attempt to return a simple string
 
-    public ClassInfo() {
+    ClassInfo() {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-        grabFile();
+        onUpload();
     }
 
     public void grabFile() {
@@ -50,27 +52,31 @@ public class ClassInfo {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        riversRef.getFile(localFile)
-                .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        // Successfully downloaded data to local file
-                        // ...
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle failed download
-                // ...
-            }
-        });
+        if (localFile != null) {
+            riversRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            // ...
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    // ...
+                }
+            });
+        }
 
     }
-    public void onUpload() {
-        StorageReference riversRef = mStorageRef.child("Upload.txt");
-        String text = "CS121";
-        byte[] bits = text.getBytes();
 
+
+    private void onUpload() {
+
+        String text = "Uploading data from another class!";
+        byte[] bits = text.getBytes();
+        riversRef = mStorageRef.child("ClassInfo.txt");
         riversRef.putBytes(bits).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -83,14 +89,14 @@ public class ClassInfo {
                     public void onFailure(@NonNull Exception exception) {
                         // Handle unsuccessful uploads
                         // ...
-
                         Log.d(TAG, "Ahh yess A challenge worth figuring out");
                     }
                 });
     }
 
 
-    public String getTemp() {
+
+    String getTemp() {
         return temp;
     }
 }
