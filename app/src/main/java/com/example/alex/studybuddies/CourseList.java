@@ -20,7 +20,6 @@ public class CourseList  {
     private Context my_context;
 
     public CourseList(Context context) {
-        //TODO print out courseList in text
         AssetManager am = context.getAssets();
         InputStream is;
         try {
