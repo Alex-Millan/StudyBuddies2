@@ -41,7 +41,7 @@ public class CourseList  {
     }
 
     class Time {
-        
+
     }
 
 }

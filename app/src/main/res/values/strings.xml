@@ -15,4 +15,5 @@
     <string name="selectCourseNumber">Course Number</string>
     <string name="addClassButton">Add Class</string>
     <string name="subjectSpinnerPrompt">Choose a class subject</string>
+    <string name="dummyText">Dumm Text</string>
 </resources>
