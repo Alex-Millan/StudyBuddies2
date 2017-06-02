@@ -23,7 +23,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * This class will read and write data into the server
+ * For now the only courses available are "Abigail" and "YourMom101"
+ * Each course has a fix 4 items (which include longitude, lattitude, starttime, endtime).
+ * here is a sample code of how to use this class
+ * Classinfo abigail = new ClassInfo();
+ * abigail.getCourse("Abigail", this); //Initialize the course list to read from
+ * abigail.getCourseSize();     //Returns the number of items in the list (should be 4 rn)
+ * abigail.starTime.getHour(0); // Returns the hour of the first item in the list
+ * abigail.loc.getLongitude(0); // returns longitude of the first item in the list as a double
+ * abigail.goodGirl(); // increments happiness counter by 1. (added this for fun does nothing)
  *
  * Created by Alex on 5/19/2017.
  */
@@ -34,6 +42,7 @@ class ClassInfo {
     private ArrayList<HashMap<String, String>> studyList;
     private StorageReference mStorageRef;
     private StorageReference riversRef ;
+    int happiness = 0;
     Location loc;
     Time startTime;
     Time endTime;
@@ -51,7 +60,9 @@ class ClassInfo {
         endTime = new Time("end_time");
     }
 
-
+    public void goodGirl() {
+        happiness++;
+    }
     //Initialize the json list.
     public void getCourse(String courseName, Context context) {
 
