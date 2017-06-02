@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".ExperimentActivity" />
+        <activity android:name=".MapsActivity" />
         <activity
             android:name=".ClassSelectionActivity"
             android:label="@string/title_activity_class_selection"></activity>
