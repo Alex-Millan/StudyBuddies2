@@ -28,11 +28,11 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-
+// Auto FORMAT Ctrl + ALT + L
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        LocationListener{
+        LocationListener {
 
     private GoogleMap mMap;
     LocationRequest mLocationRequest;
@@ -77,8 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 buildGoogleApiClient();
                 mMap.setMyLocationEnabled(true);
             }
-        }
-        else {
+        } else {
             buildGoogleApiClient();
             mMap.setMyLocationEnabled(true);
         }
@@ -102,12 +101,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         //Place current location marker
+
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+
+        ClassInfo abigail = new ClassInfo();
+        abigail.getCourse("Abigail", this); //Initialize the course list to read from
+        for (int i = 0; i < abigail.getCourseSize(); i++) {
+            int start = abigail.startTime.getHour(i); // Returns the hour of the first item in the list
+            LatLng position = new LatLng(abigail.loc.getLattidue(i), abigail.loc.getLongitude(i));
+            markerOptions.position(position);
+            markerOptions.title("Study Room  " + i);
+            int myMin = abigail.startTime.getMinute(i);
+            String minute = String.format("%.02d", myMin);
+            markerOptions.snippet(abigail.startTime.getHour(i) + ":" + minute);
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+            mCurrLocationMarker = mMap.addMarker(markerOptions);
+        }
 
         //move map camera
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
@@ -161,7 +176,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    public boolean checkLocationPermission(){
+
+    public boolean checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED) {

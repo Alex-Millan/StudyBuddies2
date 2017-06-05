@@ -2,61 +2,60 @@
   "Abigail":
   [
       {
-      "longitude": 36.9914,
-      "latitude": -122.0609,
+      "latitude": 36.9914,
+      "longitude": -122.0609,
       "start_time": 720,
       "end_time": 780
       },
 
       {
-      "longitude": 36.998963,
-      "latitude": -122.060632,
+      "latitude": 36.998963,
+      "longitude": -122.060632,
       "start_time": 720,
       "end_time": 780
       },
 
       {
-      "longitude": 36.995728,
-      "latitude": -122.058951,
+      "latitude": 36.995728,
+      "longitude": -122.058951,
       "start_time": 720,
       "end_time": 780
       },
 
       {
-      "longitude": 36.994369,
-      "latitude": -122.059369,
+      "latitude": 36.994369,
+      "longitude": -122.059369,
       "start_time": 720,
       "end_time": 780
       }
-
   ],
 
   "YourMom101":
   [
       {
-      "longitude": 36.9914,
-      "latitude": -122.0609,
+      "latitude": 36.9914,
+      "longitude": -122.0609,
       "start_time": 720,
       "end_time": 780
       },
 
       {
-      "longitude": 36.998963,
-      "latitude": -122.060632,
+      "latitude": 36.998963,
+      "longitude": -122.060632,
       "start_time": 720,
       "end_time": 780
       },
 
       {
-      "longitude": 36.995728,
-      "latitude": -122.058951,
+      "latitude": 36.995728,
+      "longitude": -122.058951,
       "start_time": 720,
       "end_time": 780
       },
 
       {
-      "longitude": 36.994369,
-      "latitude": -122.059369,
+      "latitude": 36.994369,
+      "longitude": -122.059369,
       "start_time": 720,
       "end_time": 780
       }

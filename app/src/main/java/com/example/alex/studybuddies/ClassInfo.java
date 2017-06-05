@@ -26,10 +26,10 @@ import java.util.HashMap;
  * For now the only courses available are "Abigail" and "YourMom101"
  * Each course has a fix 4 items (which include longitude, lattitude, starttime, endtime).
  * here is a sample code of how to use this class
- * Classinfo abigail = new ClassInfo();
+ * ClassInfo abigail = new ClassInfo();
  * abigail.getCourse("Abigail", this); //Initialize the course list to read from
  * abigail.getCourseSize();     //Returns the number of items in the list (should be 4 rn)
- * abigail.starTime.getHour(0); // Returns the hour of the first item in the list
+ * abigail.startTime.getHour(0); // Returns the hour of the first item in the list
  * abigail.loc.getLongitude(0); // returns longitude of the first item in the list as a double
  * abigail.goodGirl(); // increments happiness counter by 1. (added this for fun does nothing)
  *
@@ -54,6 +54,7 @@ class ClassInfo {
 
     ClassInfo() {
         //TODO intitalize all global Strings to zero
+        studyList = new ArrayList<>();
         mStorageRef = FirebaseStorage.getInstance().getReference();
         loc = new Location();
         startTime = new Time("start_time");
@@ -209,7 +210,7 @@ class ClassInfo {
             return longitude;
         }
         public double getLattidue(int index) {
-            String convert = studyList.get(index).get("lattidue");
+            String convert = studyList.get(index).get("latitude");
             double lattidue = Double.parseDouble(convert);
 
             return lattidue;
@@ -230,12 +231,12 @@ class ClassInfo {
         }
         public int getHour(int index) {
             String convert = studyList.get(index).get(myTime);
-            int hour = Integer.parseInt(convert);
+            int hour = Integer.parseInt(convert)/60;
             return hour;
         }
         public int getMinute(int index) {
             String convert = studyList.get(index).get(myTime);
-            int minute = Integer.parseInt(convert);
+            int minute = Integer.parseInt(convert)%60;
             return minute;
         }
     }

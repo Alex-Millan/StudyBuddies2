@@ -1,7 +1,6 @@
 package com.example.alex.studybuddies;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,11 +14,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -74,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        //loggedIn();
 
                         // ...
                     }
@@ -117,20 +112,11 @@ public class MainActivity extends AppCompatActivity {
         //startActivity(intent2);
     }
 
-    public void onCrash(View V) {
-        Intent intent2 = new Intent(this, ExperimentActivity.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent2);
-    }
-
-
     private void loggedIn() {
-        Intent intent = new Intent(this, ExperimentActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        //Intent intent = new Intent(this, UploadData.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        //startActivity(intent);
     }
-
-
 
     public void GoToMaps(View V){
         Intent intent2 = new Intent(this, MapsActivity.class);
