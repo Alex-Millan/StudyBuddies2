@@ -1,6 +1,7 @@
 package com.example.alex.studybuddies;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -26,6 +27,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import static android.R.attr.data;
 
 
 // Auto FORMAT Ctrl + ALT + L
@@ -99,7 +102,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
         //Place current location marker
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
@@ -117,16 +119,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
 
-        ClassInfo abigail = new ClassInfo();
-        abigail.getCourse("Abigail", this); //Initialize the course list to read from
-        for (int i = 0; i < abigail.getCourseSize(); i++) {
-            int start = abigail.startTime.getHour(i); // Returns the hour of the first item in the list
-            LatLng position = new LatLng(abigail.loc.getLattidue(i), abigail.loc.getLongitude(i));
+        ClassInfo class1 = new ClassInfo();
+        class1.getCourse("Abigail", this); //Initialize the course list to read from
+        for (int i = 0; i < class1.getCourseSize(); i++) {
+            int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
+            LatLng position = new LatLng(class1.loc.getLattidue(i), class1.loc.getLongitude(i));
             markerOptions.position(position);
             markerOptions.title("Study Room  " + i);
-            int myMin = abigail.startTime.getMinute(i);
+            int hour1 = class1.startTime.getHour(i);
+            int hour2 = class1.endTime.getHour(i);
+            int myMin = class1.startTime.getMinute(i);
+            int myMin2 = class1.startTime.getMinute(i);
             String minute = String.format("%02d", myMin);
-            markerOptions.snippet(abigail.startTime.getHour(i) + ":" + minute);
+            String minute2 = String.format("%02d", myMin2);
+            if(hour1 > 12){
+                hour1 -= 12;
+            }
+            if(hour2 > 12){
+                hour2 -= 12;
+            }
+            markerOptions.snippet(hour1 + ":" + minute + " - "
+                                + hour2 + ":" + minute2);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
@@ -136,6 +149,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent2 = new Intent(MapsActivity.this, Join.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+            }
+        });
 
     }
 
@@ -166,6 +188,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -245,3 +268,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 }
+

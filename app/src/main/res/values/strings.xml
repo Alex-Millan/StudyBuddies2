@@ -25,4 +25,13 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Title</string>
     <string name="title_notifications">Notification</string>
+    <string name="title_activity_join">Join</string>
+
+    <string name="hello">Hello World, MainActivity!</string>
+    <string name="app_name2">ListViewDeleteItems</string>
+    <string name="hintTxtItem">Enter an item here ...</string>
+    <string name="lblBtnAdd">Add Item</string>
+    <string name="txtEmpty">List is empty</string>
+    <string name="lblBtnDel">Delete Selected Items</string>
+
 </resources>
