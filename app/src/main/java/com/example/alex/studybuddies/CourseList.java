@@ -25,7 +25,6 @@ public class CourseList  {
         try {
             is = am.open("Update.txt");
             BufferedReader r = new BufferedReader(new InputStreamReader(is));
-
             String line;
             while ((line = r.readLine()) != null) {
                 courses.add(line);
