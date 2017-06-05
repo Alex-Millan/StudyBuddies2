@@ -138,4 +138,9 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent2);
     }
 
+    public void GoToClasses(View V){
+        Intent intent3 = new Intent(this, ClassSelectionActivity.class);
+        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent3);
+    }
 }

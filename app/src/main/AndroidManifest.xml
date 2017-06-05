@@ -21,7 +21,11 @@
         <activity android:name=".MapsActivity" />
         <activity
             android:name=".ClassSelectionActivity"
-            android:label="@string/title_activity_class_selection"></activity>
+            android:label="@string/title_activity_class_selection" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
