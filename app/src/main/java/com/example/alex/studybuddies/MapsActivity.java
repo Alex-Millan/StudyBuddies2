@@ -108,6 +108,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         markerOptions.title("Current Position");
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
+        //move map camera
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
+        final double currentLatitude = location.getLatitude();
+        final double currentLongitude = location.getLongitude();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
 
         ClassInfo abigail = new ClassInfo();
@@ -118,15 +125,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             markerOptions.position(position);
             markerOptions.title("Study Room  " + i);
             int myMin = abigail.startTime.getMinute(i);
-            String minute = String.format("%.02d", myMin);
+            String minute = String.format("%02d", myMin);
             markerOptions.snippet(abigail.startTime.getHour(i) + ":" + minute);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15)); //change number to change radius
 
 
         //stop location updates
