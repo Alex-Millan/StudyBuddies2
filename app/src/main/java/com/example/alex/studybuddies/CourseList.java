@@ -20,7 +20,7 @@ public class CourseList  {
     private Context my_context;
 
     public CourseList(Context context) {
-        AssetManager am = context.getAssets();
+            AssetManager am = context.getAssets();
         InputStream is;
         try {
             is = am.open("Update.txt");
@@ -36,10 +36,6 @@ public class CourseList  {
 
     public int getSize() {
         return courses.size();
-    }
-
-    class Time {
-
     }
 
 }
