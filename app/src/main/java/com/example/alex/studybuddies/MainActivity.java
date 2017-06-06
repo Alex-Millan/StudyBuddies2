@@ -105,6 +105,11 @@ public class MainActivity extends AppCompatActivity {
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }
+    public void onCrash(View V) {
+        Intent intent2 = new Intent(this, ExperimentActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent2);
+    }
 
     public void onUploadTest(View V) {
         //Intent intent2 = new Intent(this, UploadData.class);
