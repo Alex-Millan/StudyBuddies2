@@ -107,7 +107,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("Current Position");
+        ClassInfo class1 = new ClassInfo();
+        class1.getCourse("Abigail", this); //Initialize the course list to read from
+        markerOptions.title("Current Position " + class1.getCourseSize());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
         //move map camera
@@ -119,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
 
-        ClassInfo class1 = new ClassInfo();
+        //ClassInfo class1 = new ClassInfo();
         class1.getCourse("Abigail", this); //Initialize the course list to read from
         for (int i = 0; i < class1.getCourseSize(); i++) {
             int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list

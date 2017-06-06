@@ -55,7 +55,6 @@ import java.util.HashMap;
 
 class ClassInfo {
 
-    private Context context;
     private ArrayList<HashMap<String, String>> studyList;
     private StorageReference mStorageRef;
     private StorageReference riversRef ;
@@ -75,7 +74,7 @@ class ClassInfo {
         loc = new Location();
         startTime = new Time("start_time");
         endTime = new Time("end_time");
-        updateFile = new DataBase();
+        //updateFile = new DataBase();
     }
 
     //Initialize the json list.
@@ -90,21 +89,21 @@ class ClassInfo {
             for(int i = 0; i < arr.length(); i++) {
                 obj = arr.getJSONObject(i);
                 String longitude = obj.getString("longitude");
-                String lattiude = obj.getString("latitude");
+                String latitude = obj.getString("latitude");
                 String start = obj.getString("start_time");
                 String end = obj.getString("end_time");
-                String desc = obj.getString("description");
+                //String desc = obj.getString("description");
                 HashMap<String, String> temp = new HashMap<>();
 
                 // adding each child node to HashMap key => value
                 temp.put("longitude", longitude);
-                temp.put("latitude", lattiude);
+                temp.put("latitude", latitude);
                 temp.put("start_time", start);
                 temp.put("end_time", end);
-                temp.put("description", desc);
-                if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
+                //temp.put("description", desc);
+                //if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
                     studyList.add(temp);
-                }
+
 
             }
         } catch (JSONException e) {
