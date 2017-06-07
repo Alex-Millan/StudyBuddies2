@@ -42,6 +42,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
 
+    AppInfo appInfo;
+
     GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -55,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+        appInfo = AppInfo.getInstance(this);
     }
 
 
@@ -108,7 +111,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail", this); //Initialize the course list to read from
+        class1.getCourse("Abigail"); //Initialize the course list to read from
         markerOptions.title("Current Position " + class1.getCourseSize());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
@@ -120,12 +123,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
-
         //ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail", this); //Initialize the course list to read from
+        class1.getCourse("Abigail"); //Initialize the course list to read from
         for (int i = 0; i < class1.getCourseSize(); i++) {
             int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
-            LatLng position = new LatLng(class1.loc.getLattidue(i), class1.loc.getLongitude(i));
+            LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
             markerOptions.position(position);
             markerOptions.title("Study Room  " + i);
             int hour1 = class1.startTime.getHour(i);
@@ -155,6 +157,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                //MainActivity main = new MainActivity();
+                //main.Stay();
+                appInfo.addClass(marker.getTitle());
                 Intent intent2 = new Intent(MapsActivity.this, Join.class);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent2);

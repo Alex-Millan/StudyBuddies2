@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -78,9 +79,13 @@ class ClassInfo {
     }
 
     //Initialize the json list.
-    public void getCourse(String courseName, Context context) {
+    String jsonFile = "";
+    public void getCourse(String courseName) {
+        studyTimeRead = false;
+        getStudyTimes();
+        while(studyTimeRead) {
 
-        String jsonFile = this.getStudyTimes(context);
+        }
         JSONArray arr = null;
         JSONObject obj = null;
 
@@ -101,9 +106,9 @@ class ClassInfo {
                 temp.put("start_time", start);
                 temp.put("end_time", end);
                 //temp.put("description", desc);
-                //if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
+                if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
                     studyList.add(temp);
-
+                }
 
             }
         } catch (JSONException e) {
@@ -114,50 +119,53 @@ class ClassInfo {
         return studyList.size();
     }
 
-    public String getStudyTimes(Context context){
+    boolean studyTimeRead;
+    public void getStudyTimes(){
         String json = null;
-        try {
-            InputStream is = context.getAssets().open("DummyText.json");
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
-
+        new getFile().execute();
     }
 
-    public void grabFile() {
-        File localFile = null;
-        StorageReference riversRef = mStorageRef.child("Upload.txt");
-        try {
-            localFile = File.createTempFile("Upload", "txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        if (localFile != null) {
-            riversRef.getFile(localFile)
-                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            // Successfully downloaded data to local file
-                            // ...
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception exception) {
-                    // Handle failed download
-                    // ...
-                }
-            });
-        }
+    private class getFile extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            File update = updateFile.getLocalFile();
+            InputStream stream = null;
+            try {
+                stream = new FileInputStream(update);
+                int size = 0;
+                try {
+                    size = stream.available();
+                    byte[] buffer = new byte[size];
+                    stream.read(buffer);
+                    stream.close();
+                    jsonFile = new String(buffer, "UTF-8");
 
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            studyTimeRead = true;
+
+
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                updateFile.grabFile();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            while(!updateFile.isFileRead()){
+                //Wait until file is read
+            }
+            return null;
+        }
     }
 
 
@@ -180,7 +188,7 @@ class ClassInfo {
             longitude = Double.parseDouble(convert);
             return longitude;
         }
-        public double getLattidue(int index) {
+        public double getLatitude(int index) {
             String convert = studyList.get(index).get("latitude");
             latitude = Double.parseDouble(convert);
             return latitude;
@@ -221,6 +229,11 @@ class ClassInfo {
     private String newStart;
     private String newEnd;
     private String description;
+    /*
+    Please pass down StartTime and EndTime is minutes
+    so 8:00 AM will be 480
+    and 8:00 PM will be 1200
+     */
     public void update(String course, String lat, String longi, String startTime, String endTime, String desc) throws FileNotFoundException {
         courseName = course ;
         newLat = lat;

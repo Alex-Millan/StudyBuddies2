@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DataBaseDemo</string>
+    <string name="app_name">StudyBuddies</string>
     <string name="SignUP">Sign Up</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -26,8 +26,12 @@
     <string name="title_dashboard">Title</string>
     <string name="title_notifications">Notification</string>
 
-    <string name ="hintTxtItem">Text Item</string>
-    <string name ="lblBtnAdd">Add</string>
-    <string name ="txtEmpty">Empty</string>
-    <string name ="lblBtnDel">Clear All</string>
+    <string name="hintTxtItem">Text Item</string>
+    <string name="lblBtnAdd">Add</string>
+    <string name="txtEmpty">Empty</string>
+    <string name="lblBtnDel">Clear All</string>
+    <!-- Facebook loggin stuff-->
+    <string name="facebook_app_id">864818893681531</string>
+    <string name="fb_login_protocol_scheme">fb864818893681531</string>
+
 </resources>
