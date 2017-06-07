@@ -42,6 +42,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Location mLastLocation;
     Marker mCurrLocationMarker;
 
+    AppInfo appInfo;
+
     GoogleApiClient mGoogleApiClient;
 
     @Override
@@ -55,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+        appInfo = AppInfo.getInstance(this);
     }
 
 
@@ -155,6 +158,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
+                //MainActivity main = new MainActivity();
+                //main.Stay();
+                appInfo.addClass(marker.getTitle());
                 Intent intent2 = new Intent(MapsActivity.this, Join.class);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent2);

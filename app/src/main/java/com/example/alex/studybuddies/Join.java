@@ -30,6 +30,7 @@ import android.widget.Toast;
 public class Join extends AppCompatActivity{
 
     private static final String LOG_TAG = "lv-ex";
+    AppInfo appInfo;
 
     private class ListElement {
         ListElement() {};
@@ -128,10 +129,11 @@ public class Join extends AppCompatActivity{
         ListView myListView = (ListView) findViewById(R.id.listView);
         myListView.setAdapter(aa);
         aa.notifyDataSetChanged();
+        appInfo = AppInfo.getInstance(this);
 
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 2; i++) {
             aList.add(new ListElement(
-                    "hello " + i, "yola " + i, "Delete"
+                    appInfo.courses.get(i) + i, "yola " + i, "Delete"
             ));
 
 
