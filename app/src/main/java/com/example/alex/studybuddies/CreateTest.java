@@ -24,7 +24,7 @@ import android.app.AlertDialog;
 
 import java.lang.String;
 
-public class CreateActivity extends AppCompatActivity {
+public class CreateTest extends AppCompatActivity {
 
     // DropDown
     private Spinner spinner1, spinner2;
@@ -92,11 +92,11 @@ public class CreateActivity extends AppCompatActivity {
     @Override
     protected Dialog onCreateDialog(int id){
         if (id == DIALOG_ID1){
-            return new TimePickerDialog(CreateActivity.this, AlertDialog.THEME_HOLO_DARK,
+            return new TimePickerDialog(CreateTest.this, AlertDialog.THEME_HOLO_DARK,
                     kTimePickerListenter1, hour_1, minute_1, false);
         }
         else if(id == DIALOG_ID2){
-            return new TimePickerDialog(CreateActivity.this, AlertDialog.THEME_HOLO_DARK,
+            return new TimePickerDialog(CreateTest.this, AlertDialog.THEME_HOLO_DARK,
                     kTimePickerListenter2, hour_2, minute_2, false);
         }
         return null;
@@ -111,7 +111,9 @@ public class CreateActivity extends AppCompatActivity {
                     minute_1 = minute;
                     displayTime1 = formatTime(hourOfDay, minute_1);
 
-                    Toast.makeText(CreateActivity.this, displayTime1, Toast.LENGTH_SHORT).show();
+                    Button btnStartTime = (Button) findViewById(R.id.startTimeButton);
+                    btnStartTime.setText(displayTime1);
+                    Toast.makeText(CreateTest.this, displayTime1, Toast.LENGTH_SHORT).show();
                 }
             };
 
@@ -124,7 +126,9 @@ public class CreateActivity extends AppCompatActivity {
                     minute_2 = minute;
                     displayTime2 = formatTime(hour_2, minute_2);
 
-                    Toast.makeText(CreateActivity.this, displayTime2, Toast.LENGTH_SHORT).show();
+                    Button btnEndTime = (Button) findViewById(R.id.endTimeButton);
+                    btnEndTime.setText(displayTime2);
+                    Toast.makeText(CreateTest.this, displayTime2, Toast.LENGTH_SHORT).show();
                 }
             };
 
@@ -178,7 +182,7 @@ public class CreateActivity extends AppCompatActivity {
                 name = edit.getText().toString();
 //                text.setText(name);
 
-                Toast.makeText(CreateActivity.this,
+                Toast.makeText(CreateTest.this,
                         "DropDown : " + String.valueOf(spinner1.getSelectedItem()) +
                                 "\nStart: " + displayTime1 +
                                 "\nEnd: " + displayTime2 +

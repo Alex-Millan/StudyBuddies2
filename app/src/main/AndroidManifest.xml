@@ -37,7 +37,7 @@
         <activity
             android:name=".ClassSelectionActivity"
             android:label="@string/title_activity_class_selection" />
-        <activity android:name=".AppInfo"></activity>
+        <activity android:name=".CreateTest"></activity>
     </application>
 
 </manifest>

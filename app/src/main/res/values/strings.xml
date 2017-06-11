@@ -30,4 +30,23 @@
     <string name="lblBtnAdd">Add</string>
     <string name="txtEmpty">Empty</string>
     <string name="lblBtnDel">Clear All</string>
+
+    <!--DropDown for Create Activity-->
+    <string-array name="country_arrays">
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New Zealand</item>
+        <item>India</item>
+    </string-array>
+
+
+    <!--EditText for Create Activity-->
+    <!--<string name="button_title">Show Description Below</string>-->
+    <string name="edit_hint">Enter Description</string>
+    <!--<string name="text_title">Description is:</string>-->
+
 </resources>
