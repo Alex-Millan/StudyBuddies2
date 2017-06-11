@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onSignUp(View V) {
-        Intent intent2 = new Intent(this, SignUpActivity.class);
+        Intent intent2 = new Intent(this, MapsActivity.class);
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }
@@ -178,22 +178,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent3);
     }
 
-
-    // Mario
-    // Yeah I dont know why CreateTest works but CreateActivity doesn't work.
-    // It's the exact same code.
-    public void goToCreate(View V) {
-
-        Intent intent = new Intent(this, CreateTest.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
-
-
-    // added by Stephanie
-    public void Stay() {
-        appInfo.addClass("class1");
-        //appInfo.sharedString1 = text1.toString();
-    }
 }

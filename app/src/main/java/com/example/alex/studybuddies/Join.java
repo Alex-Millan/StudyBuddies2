@@ -97,6 +97,7 @@ public class Join extends AppCompatActivity{
                     // Let's remove the list item.
                     int i = Integer.parseInt(s);
                     aList.remove(i);
+                    appInfo.delete(i);
                     aa.notifyDataSetChanged();
                 }
             });
@@ -130,11 +131,12 @@ public class Join extends AppCompatActivity{
         myListView.setAdapter(aa);
         aa.notifyDataSetChanged();
         appInfo = AppInfo.getInstance(this);
-
-        for (int i = 0; i < 2; i++) {
-            aList.add(new ListElement(
-                    appInfo.courses.get(i) + i, "yola " + i, "Delete"
-            ));
+        for (int i = 1; i < appInfo.getSize(); i++) {
+            if(appInfo.courses.get(i) != "null") {
+                aList.add(new ListElement(
+                        appInfo.courses.get(i), "Time " + i, "Delete"
+                ));
+            }
 
 
         }

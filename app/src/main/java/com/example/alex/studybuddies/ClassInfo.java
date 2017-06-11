@@ -29,7 +29,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -45,8 +44,8 @@ import java.util.HashMap;
  *
  *
  * To update Study time
-    ClassInfo myStudyTime = new ClassInfo();
-    myStudyTime.update()
+ ClassInfo myStudyTime = new ClassInfo();
+ myStudyTime.update()
 
 
 
@@ -79,13 +78,9 @@ class ClassInfo {
     }
 
     //Initialize the json list.
-    String jsonFile = "";
-    public void getCourse(String courseName) {
-        studyTimeRead = false;
-        getStudyTimes();
-        while(studyTimeRead) {
+    public void getCourse(String courseName, Context context) {
 
-        }
+        String jsonFile = this.getStudyTimes(context);
         JSONArray arr = null;
         JSONObject obj = null;
 
@@ -106,9 +101,9 @@ class ClassInfo {
                 temp.put("start_time", start);
                 temp.put("end_time", end);
                 //temp.put("description", desc);
-                if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
-                    studyList.add(temp);
-                }
+                //if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
+                studyList.add(temp);
+
 
             }
         } catch (JSONException e) {
@@ -119,53 +114,50 @@ class ClassInfo {
         return studyList.size();
     }
 
-    boolean studyTimeRead;
-    public void getStudyTimes(){
+    public String getStudyTimes(Context context){
         String json = null;
-        new getFile().execute();
-    }
-
-    private class getFile extends AsyncTask<String, String, String> {
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            File update = updateFile.getLocalFile();
-            InputStream stream = null;
-            try {
-                stream = new FileInputStream(update);
-                int size = 0;
-                try {
-                    size = stream.available();
-                    byte[] buffer = new byte[size];
-                    stream.read(buffer);
-                    stream.close();
-                    jsonFile = new String(buffer, "UTF-8");
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        try {
+            InputStream is = context.getAssets().open("DummyText.json");
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
 
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            studyTimeRead = true;
-
-
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                updateFile.grabFile();
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            while(!updateFile.isFileRead()){
-                //Wait until file is read
-            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
             return null;
         }
+        return json;
+
+    }
+
+    public void grabFile() {
+        File localFile = null;
+        StorageReference riversRef = mStorageRef.child("Upload.txt");
+        try {
+            localFile = File.createTempFile("Upload", "txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if (localFile != null) {
+            riversRef.getFile(localFile)
+                    .addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            // Successfully downloaded data to local file
+                            // ...
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    // Handle failed download
+                    // ...
+                }
+            });
+        }
+
     }
 
 
@@ -229,11 +221,6 @@ class ClassInfo {
     private String newStart;
     private String newEnd;
     private String description;
-    /*
-    Please pass down StartTime and EndTime is minutes
-    so 8:00 AM will be 480
-    and 8:00 PM will be 1200
-     */
     public void update(String course, String lat, String longi, String startTime, String endTime, String desc) throws FileNotFoundException {
         courseName = course ;
         newLat = lat;
@@ -256,35 +243,35 @@ class ClassInfo {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-                String json = null;
+            String json = null;
 
             JSONArray arr = null;
             JSONObject updateJson= null;
+            try {
+                int size = stream.available();
+                byte[] buffer = new byte[size];
+                stream.read(buffer);
+                json = new String(buffer, "UTF-8");
                 try {
-                    int size = stream.available();
-                    byte[] buffer = new byte[size];
-                    stream.read(buffer);
-                    json = new String(buffer, "UTF-8");
-                    try {
-                        arr = new JSONObject(json).getJSONArray(courseName);
+                    arr = new JSONObject(json).getJSONArray(courseName);
 
-                        JSONObject temp = new JSONObject();
-                        temp.put("latitude", newLat);
-                        temp.put("longitude", newLong);
-                        temp.put("start_time", newStart);
-                        temp.put("end_time", newEnd);
-                        temp.put("description", description);
-                        arr.put(temp);
-                        updateJson = new JSONObject(json);
-                        updateJson.put(courseName, arr);
-                    } catch (JSONException e) {
+                    JSONObject temp = new JSONObject();
+                    temp.put("latitude", newLat);
+                    temp.put("longitude", newLong);
+                    temp.put("start_time", newStart);
+                    temp.put("end_time", newEnd);
+                    temp.put("description", description);
+                    arr.put(temp);
+                    updateJson = new JSONObject(json);
+                    updateJson.put(courseName, arr);
+                } catch (JSONException e) {
 
 
-                        e.printStackTrace();
-                    }
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                   }
+                    e.printStackTrace();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             if(arr != null){
                 stream = new ByteArrayInputStream(updateJson.toString().getBytes());
             }else {
