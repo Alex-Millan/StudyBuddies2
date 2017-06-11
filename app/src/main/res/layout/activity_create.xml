@@ -32,7 +32,6 @@
         android:id="@+id/spinner1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:entries=""
         app:layout_constraintLeft_toRightOf="@+id/classTextView"
         app:layout_constraintBaseline_toBaselineOf="@id/classTextView"
         android:layout_marginLeft="8dp" />

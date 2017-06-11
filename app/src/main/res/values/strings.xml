@@ -33,5 +33,6 @@
     <!-- Facebook loggin stuff-->
     <string name="facebook_app_id">864818893681531</string>
     <string name="fb_login_protocol_scheme">fb864818893681531</string>
+    <string name="edit_hint">Description</string>
 
 </resources>
