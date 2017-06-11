@@ -103,8 +103,6 @@ class ClassInfo {
                 //temp.put("description", desc);
                 //if(Double.parseDouble(longitude) != 0 && Double.parseDouble(longitude) != 0) {
                 studyList.add(temp);
-
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
