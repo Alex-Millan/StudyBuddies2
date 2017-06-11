@@ -36,6 +36,7 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".ClassSelectionActivity"
+            
             android:label="@string/title_activity_class_selection" />
         <activity android:name=".CreateTest"></activity>
     </application>
