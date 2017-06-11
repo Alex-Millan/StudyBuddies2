@@ -163,4 +163,14 @@
         app:layout_constraintRight_toRightOf="@+id/button2"
         app:layout_constraintTop_toBottomOf="@+id/button2" />
 
+    <Button
+        android:id="@+id/buttonJoinCreate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:onClick="goToJoinCreate"
+        android:text="JoinCreate"
+        app:layout_constraintBaseline_toBaselineOf="@id/button2"
+        app:layout_constraintLeft_toRightOf="@+id/button2" />
+
 </android.support.constraint.ConstraintLayout>
