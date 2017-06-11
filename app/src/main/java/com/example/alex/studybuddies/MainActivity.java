@@ -20,13 +20,16 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String TAG = "WHYFAILTHO";
     private String HAGS = "ALEXISLAME";
+    static final public String MYPREFS = "myprefs";
+    AppInfo appInfo;
+
     //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         authenticating();
-
+        appInfo = AppInfo.getInstance(this);
 
 
     }
@@ -42,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
         if (mAuthListener != null) {
-                mAuth.removeAuthStateListener(mAuthListener);
+            mAuth.removeAuthStateListener(mAuthListener);
         }
     }
 
     public void onSignIn(View v) {
 
-        EditText userEmail  = (EditText) findViewById(R.id.userEmail);
+        EditText userEmail = (EditText) findViewById(R.id.userEmail);
         EditText userPassword = (EditText) findViewById(R.id.userPassword);
 
         String email = userEmail.getText().toString();
@@ -57,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         if (email.matches("")) {
             Toast.makeText(this, "You did not enter a username", Toast.LENGTH_SHORT).show();
             return;
-        }        if (password.matches("")) {
+        }
+        if (password.matches("")) {
             Toast.makeText(this, "You did not enter a password", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -105,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }
+
     public void onCrash(View V) {
         Intent intent2 = new Intent(this, ExperimentActivity.class);
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -123,15 +128,22 @@ public class MainActivity extends AppCompatActivity {
         //startActivity(intent);
     }
 
-    public void GoToMaps(View V){
+    public void GoToMaps(View V) {
         Intent intent2 = new Intent(this, MapsActivity.class);
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }
 
-    public void GoToClasses(View V){
+    public void GoToClasses(View V) {
         Intent intent3 = new Intent(this, ClassSelectionActivity.class);
         intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent3);
+    }
+
+
+    // added by Stephanie
+    public void Stay() {
+        appInfo.addClass("class1");
+        //appInfo.sharedString1 = text1.toString();
     }
 }

@@ -9,99 +9,159 @@ import java.util.Random;
 
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
-public class Join extends ListActivity {
+public class Join extends AppCompatActivity{
 
+    private static final String LOG_TAG = "lv-ex";
+    AppInfo appInfo;
 
-    /**
-     * Items entered by the user is stored in this ArrayList variable
-     */
-    ArrayList list = new ArrayList();
+    private class ListElement {
+        ListElement() {};
 
-    /**
-     * Declaring an ArrayAdapter to set items to ListView
-     */
-    SimpleAdapter adapter;
-    // Configure the first entry.
-    HashMap<String, String> entry1;
-    // Configure the second entry
-    HashMap<String, String> entry2;
+        ListElement(String tl, String t2, String bl) {
+            textLabel = tl;
+            textLabel2 = t2;
+            buttonLabel = bl;
+        }
 
-    /**
-     * Called when the activity is first created.
-     */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        /** Setting a custom layout for the list activity */
-        setContentView(R.layout.content_join);
-
-        /** Reference to the delete button of the layout main.xml */
-        Button btnDel = (Button) findViewById(R.id.btnDel);
-
-        // The soon to be list of entries.
-        List<Map<String, String>> entries = new ArrayList<Map<String, String>>();
-
-        entry1 = new HashMap<String, String>();
-        entry1.put("title", "Class 1");
-        entry1.put("content", "Class 1 Details");
-        String[] keys = new String[]{
-                "title", "content"
-        };
-        // Add the first entry to the list.
-        entries.add(entry1);
-
-        // Configure the second entry
-        entry2 = new HashMap<String, String>();
-        entry2.put("title", "Class 2");
-        entry2.put("content", "Class 2 Details");
-
-        // Add the second entry to the list.
-        entries.add(entry2);
-        int[] viewIDs = new int[]{
-                android.R.id.text1, android.R.id.text2
-        };
-
-        /** Defining the ArrayAdapter to set items to ListView */
-        adapter = new SimpleAdapter(this, entries, android.R.layout.simple_list_item_activated_2, keys, viewIDs);
-        //adapter2 = new ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, keys, list);
-
-
-        /** Defining a click event listener for the button "Delete" */
-        OnClickListener listenerDel = new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /** Getting the checked items from the listview */
-                SparseBooleanArray checkedItemPositions = getListView().getCheckedItemPositions();
-                int itemCount = getListView().getCount();
-                entry1.clear();
-                entry2.clear();
-                for (int i = itemCount - 1; i >= 0; i--) {
-                    if (checkedItemPositions.get(i)) {
-                        //adapter.remove(entry.get(i));
-                    }
-                }
-                checkedItemPositions.clear();
-                adapter.notifyDataSetChanged();
-            }
-        };
-
-
-        /** Setting the event listener for the delete button */
-        btnDel.setOnClickListener(listenerDel);
-
-        /** Setting the adapter to the ListView */
-        setListAdapter(adapter);
+        public String textLabel;
+        public String textLabel2;
+        public String buttonLabel;
     }
+
+    private ArrayList<ListElement> aList;
+
+    private class MyAdapter extends ArrayAdapter<ListElement> {
+
+        int resource;
+        Context context;
+
+        public MyAdapter(Context _context, int _resource, List<ListElement> items) {
+            super(_context, _resource, items);
+            resource = _resource;
+            context = _context;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            LinearLayout newView;
+
+            ListElement w = getItem(position);
+
+            // Inflate a new view if necessary.
+            if (convertView == null) {
+                newView = new LinearLayout(getContext());
+                LayoutInflater vi = (LayoutInflater)
+                        getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                vi.inflate(resource,  newView, true);
+            } else {
+                newView = (LinearLayout) convertView;
+            }
+
+            // Fills in the view.
+            TextView tv = (TextView) newView.findViewById(R.id.itemText);
+            TextView tv2 = (TextView) newView.findViewById(R.id.itemText2);
+            Button b = (Button) newView.findViewById(R.id.itemButton);
+            tv.setText(w.textLabel);
+            tv2.setText(w.textLabel2);
+            b.setText(w.buttonLabel);
+
+            // Sets a listener for the button, and a tag for the button as well.
+            b.setTag(new Integer(position));
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Reacts to a button press.
+                    // Gets the integer tag of the button.
+                    String s = v.getTag().toString();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, s, duration);
+                    toast.show();
+                    // Let's remove the list item.
+                    int i = Integer.parseInt(s);
+                    aList.remove(i);
+                    aa.notifyDataSetChanged();
+                }
+            });
+
+            // Set a listener for the whole list item.
+            newView.setTag(w.textLabel);
+            newView.setTag(w.textLabel2);
+            newView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String s = v.getTag().toString();
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, s, duration);
+                    toast.show();
+                }
+            });
+
+            return newView;
+        }
+    }
+
+    private MyAdapter aa;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_join);
+        aList = new ArrayList<ListElement>();
+        aa = new MyAdapter(this, R.layout.list_element, aList);
+        ListView myListView = (ListView) findViewById(R.id.listView);
+        myListView.setAdapter(aa);
+        aa.notifyDataSetChanged();
+        appInfo = AppInfo.getInstance(this);
+
+        for (int i = 0; i < 2; i++) {
+            aList.add(new ListElement(
+                    appInfo.courses.get(i) + i, "yola " + i, "Delete"
+            ));
+
+
+        }
+    }
+
+/*
+    public void clickRefresh (View v) {
+        Log.i(LOG_TAG, "Requested a refresh of the list");
+        Random rn = new Random();
+        SecureRandomString srs = new SecureRandomString();
+        // How long a list do we make?
+        int n = 4 + rn.nextInt(10);
+        // Let's fill the array with n random strings.
+        // NOTE: aList is associated to the array adapter aa, so
+        // we cannot do here aList = new ArrayList<ListElement>() ,
+        // otherwise we create another ArrayList which would not be
+        // associated with aa.
+        // aList = new ArrayList<ListElement>(); --- NO
+        aList.clear();
+        for (int i = 0; i < n; i++) {
+            aList.add(new ListElement(
+                    srs.nextString(), "Delete"
+            ));
+        }
+        // We notify the ArrayList adapter that the underlying list has changed,
+        // triggering a re-rendering of the list.
+        aa.notifyDataSetChanged();
+    }*/
 
 }

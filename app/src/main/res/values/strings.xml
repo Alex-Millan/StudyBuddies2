@@ -26,8 +26,8 @@
     <string name="title_dashboard">Title</string>
     <string name="title_notifications">Notification</string>
 
-    <string name ="hintTxtItem">Text Item</string>
-    <string name ="lblBtnAdd">Add</string>
-    <string name ="txtEmpty">Empty</string>
-    <string name ="lblBtnDel">Clear All</string>
+    <string name="hintTxtItem">Text Item</string>
+    <string name="lblBtnAdd">Add</string>
+    <string name="txtEmpty">Empty</string>
+    <string name="lblBtnDel">Clear All</string>
 </resources>
