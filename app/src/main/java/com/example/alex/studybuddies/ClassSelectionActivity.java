@@ -26,6 +26,8 @@ public class ClassSelectionActivity extends AppCompatActivity {
     AppInfo appInfo;
 
     TextView title;
+    TextView classText;
+    TextView colorText;
 
     Spinner coursesDropdown;
     Spinner colorDropdown;
@@ -52,9 +54,15 @@ public class ClassSelectionActivity extends AppCompatActivity {
         myCourseList = new CourseList(this);
         appInfo = AppInfo.getInstance(this);
 
+
+        final Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
         title = (TextView) findViewById(R.id.title);
-        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        classText = (TextView) findViewById(R.id.coursesTextView);
+        colorText = (TextView) findViewById(R.id.colorTextView);
+
         title.setTypeface(myCustomFont);
+        classText.setTypeface(myCustomFont);
+        colorText.setTypeface(myCustomFont);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         disableShiftMode(navigation);
@@ -115,6 +123,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
         subjectItems = list;
+
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, subjectItems);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coursesDropdown.setAdapter(adapter1);
@@ -122,7 +131,9 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedClass = adapterView.getItemAtPosition(i).toString();
-                selectedClass = adapterView.getItemAtPosition(i).toString();
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.rgb(250,250,250));
+                ((TextView) adapterView.getChildAt(0)).setTypeface(myCustomFont);
+
                 if (selectedClass.equals("[Select a course]")) {
                 }
                 else{
@@ -142,7 +153,9 @@ public class ClassSelectionActivity extends AppCompatActivity {
         colorDropdown.setAdapter(adapter2);
         colorDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ((TextView) adapterView.getChildAt(0)).setTextColor(Color.rgb(250,250,250));
                 selectedColor = adapterView.getItemAtPosition(i).toString();
+                ((TextView) adapterView.getChildAt(0)).setTypeface(myCustomFont);
                 if(selectedColor.equals("Red")) {
                     rgb = "234,51,12";
                     rValue = "234";
