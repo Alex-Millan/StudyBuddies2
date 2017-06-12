@@ -74,7 +74,7 @@ class ClassInfo {
         loc = new Location();
         startTime = new Time("start_time");
         endTime = new Time("end_time");
-        //updateFile = new DataBase();
+        updateFile = new DataBase();
     }
 
     //Initialize the json list.

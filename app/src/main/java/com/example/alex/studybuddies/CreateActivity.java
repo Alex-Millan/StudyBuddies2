@@ -27,6 +27,7 @@ import android.widget.TextView;
 // TimePicker
 import android.app.AlertDialog;
 
+import java.io.FileNotFoundException;
 import java.lang.String;
 import java.lang.reflect.Field;
 
@@ -35,6 +36,7 @@ public class CreateActivity extends AppCompatActivity {
     // DropDown
     private Spinner spinner1, spinner2;
     private Button btnSubmit;
+    String course;
 
     // TimePicker Stuff
     private TimePicker timePicker1;
@@ -54,6 +56,9 @@ public class CreateActivity extends AppCompatActivity {
     EditText edit;
     String name;
 
+    // ClassInfo
+    ClassInfo classStuff;
+
 
 
     @Override
@@ -71,6 +76,9 @@ public class CreateActivity extends AppCompatActivity {
 
         // TimePicker
         showTimePickerDialog();
+
+        // ClassInfo
+        classStuff = new ClassInfo();
 
     }
 
@@ -185,10 +193,33 @@ public class CreateActivity extends AppCompatActivity {
 
                 // getting text from edittext
                 name = edit.getText().toString();
+
+                if(name.equals("")){
+                    name = "No Description";
+                }
+
+
 //                text.setText(name);
+                course = String.valueOf(spinner1.getSelectedItem());
+
+
+                // ClassInfo
+                String tempCourse = "AMS 10";
+                // Temp long and lat values
+                String lat = "latString";
+                String longi = "longiString";
+
+                try {
+                    classStuff.update(tempCourse, lat, longi, displayTime1, displayTime2, name);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+//                (String course, String lat, String longi, String startTime, String endTime, String desc)
+
 
                 Toast.makeText(CreateActivity.this,
-                        "DropDown : " + String.valueOf(spinner1.getSelectedItem()) +
+                        "DropDown : " + course +
                                 "\nStart: " + displayTime1 +
                                 "\nEnd: " + displayTime2 +
                                 "\nDescription: " + name,

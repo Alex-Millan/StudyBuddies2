@@ -2,6 +2,7 @@ package com.example.alex.studybuddies;
 
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -10,10 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import java.lang.reflect.Field;
 
 public class JoinCreate extends AppCompatActivity {
+
+//    Button joinButt, createButt;
+//    Typeface tfChalk, tfWhite;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +27,15 @@ public class JoinCreate extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
+
+//        joinButt = (Button) findViewById(R.id.joinButton);
+//        createButt = (Button) findViewById(R.id.createButton);
+//
+//        tfChalk = Typeface.createFromAsset(getAssets(), "fonts/ChalkDust.tff");
+//        joinButt.setTypeface(tfChalk);
+//
+//        tfWhite = Typeface.createFromAsset(getAssets(), "fonts/ChalkWhite.tff");
+//        createButt.setTypeface(tfWhite);
     }
 
     public void goToCreate(View V) {
