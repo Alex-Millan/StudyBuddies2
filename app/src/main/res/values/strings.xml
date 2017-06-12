@@ -31,6 +31,9 @@
     <string name="txtEmpty">Empty</string>
     <string name="lblBtnDel">Clear All</string>
 
+    <string name="facebook_app_id">864818893681531</string>
+    <string name="fb_login_protocol_scheme">fb864818893681531</string>
+
     <!--DropDown for Create Activity-->
     <string-array name="country_arrays">
         <item>Malaysia</item>
@@ -42,7 +45,6 @@
         <item>New Zealand</item>
         <item>India</item>
     </string-array>
-
 
     <!--EditText for Create Activity-->
     <!--<string name="button_title">Show Description Below</string>-->

@@ -32,10 +32,7 @@
         android:id="@+id/spinner1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
         android:entries="@array/country_arrays"
-=======
->>>>>>> origin/master
         app:layout_constraintLeft_toRightOf="@+id/classTextView"
         app:layout_constraintBaseline_toBaselineOf="@id/classTextView"
         android:layout_marginLeft="8dp" />
