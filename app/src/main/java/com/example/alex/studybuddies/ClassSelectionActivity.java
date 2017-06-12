@@ -31,6 +31,9 @@ public class ClassSelectionActivity extends AppCompatActivity {
     String selectedColor;
 
     String rgb;
+    String rValue;
+    String bValue;
+    String gValue;
 
     CourseList myCourseList;
 
@@ -129,24 +132,42 @@ public class ClassSelectionActivity extends AppCompatActivity {
                 selectedColor = adapterView.getItemAtPosition(i).toString();
                 if(selectedColor.equals("Red")) {
                     rgb = "234,51,12";
+                    rValue = "234";
+                    gValue = "51";
+                    bValue = "12";
                 }
                 else if(selectedColor.equals("Orange")) {
                     rgb = "242,146,44";
+                    rValue = "242";
+                    gValue = "146";
+                    bValue = "44";
                 }
                 else if(selectedColor.equals("Yellow")) {
                     rgb = "245,241,27";
+                    rValue = "245";
+                    gValue = "241";
+                    bValue = "27";
                 }
                 else if(selectedColor.equals("Green")) {
                     rgb = "99,240,13";
+                    rValue = "99";
+                    gValue = "240";
+                    bValue = "13";
                 }
                 else if(selectedColor.equals("Blue")) {
                     rgb = "13,85,240";
+                    rValue = "13";
+                    gValue = "85";
+                    bValue = "240";
                 }
                 else if(selectedColor.equals("Purple")) {
                     rgb = "175,13,240";
+                    rValue = "175";
+                    gValue = "13";
+                    bValue = "240";
                 }
                 if (!selectedColor.equals("[Select a color]")) {
-                    Toast.makeText(getApplicationContext(), "Selected Color: " + selectedCourseNumber, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Selected Color: " + selectedColor, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -190,9 +211,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
             intent.putExtra("color",selectedColor);
             startActivity(intent);
         }
-
-
-        appInfo.addClass(selectedClass,"100","100","100");
-
+        appInfo.addClass(selectedClass,rValue,gValue,bValue);
     }
 }
