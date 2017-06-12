@@ -222,10 +222,20 @@ public void loadMap(ClassInfo class1){
         if (hour2 > 12) {
             hour2 -= 12;
         }
-        markerOptions.snippet(hour1 + ":" + minute + " - "
-                + hour2 + ":" + minute2);
+        markerOptions.snippet(hour1 + ":" + minute + "-"
+                + hour2 + ":" + minute2 + " " + i);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
+    }
+
+    boolean startDrag = false;
+    Bundle CreateActivity = getIntent().getExtras();
+    if (change == null) {
+    } else {
+        startDrag = CreateActivity.getBoolean("draggable");
+    }
+    if(startDrag == true){
+        getStudyLocation(latLng);
     }
 
 
