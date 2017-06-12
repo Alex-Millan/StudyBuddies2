@@ -51,6 +51,8 @@ public class CreateActivity extends AppCompatActivity {
     int minute_2;
     String displayTime1;
     String displayTime2;
+    String latty;
+    String longy;
 
     // EditText
     EditText edit;
@@ -68,6 +70,15 @@ public class CreateActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
+
+        latty = "null";
+        longy = "null";
+        Bundle change = getIntent().getExtras();
+        if (change == null) {
+        } else {
+            latty = change.getString("latitude");
+            longy = change.getString("longitude");
+        }
 
         // Drop-Down
 //        addItemsOnSpinner2();
@@ -206,8 +217,8 @@ public class CreateActivity extends AppCompatActivity {
                 // ClassInfo
                 String tempCourse = "AMS 10";
                 // Temp long and lat values
-                String lat = "latString";
-                String longi = "longiString";
+                String lat = latty;
+                String longi = longy;
 
                 try {
                     classStuff.update(tempCourse, lat, longi, displayTime1, displayTime2, name);
@@ -222,6 +233,8 @@ public class CreateActivity extends AppCompatActivity {
                         "DropDown : " + course +
                                 "\nStart: " + displayTime1 +
                                 "\nEnd: " + displayTime2 +
+                                "\nLat: " + lat +
+                                "\nLong: " + longi +
                                 "\nDescription: " + name,
                         Toast.LENGTH_SHORT).show();
             }
@@ -267,9 +280,10 @@ public class CreateActivity extends AppCompatActivity {
     public void goToMap(View V) {
 
         // Go to Map activity
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        Intent intent2 = new Intent(this, MapsActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("draggable",true);
+        startActivity(intent2);
     }
 
 
