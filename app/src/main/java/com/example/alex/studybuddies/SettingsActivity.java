@@ -31,8 +31,6 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         disableShiftMode(navigation);
         Menu menu = navigation.getMenu();
@@ -56,13 +54,12 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.nav_settings:
-
                         break;
                 }
                 return false;
             }
         });
-        
+
         radiusBar = (SeekBar) findViewById(R.id.radiusBar);
         radiusNum = (TextView) findViewById(R.id.radiusNumber);
         radiusNum.setText("Radius: " + radiusBar.getProgress());
@@ -111,68 +108,5 @@ public class SettingsActivity extends AppCompatActivity {
             //Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
     }
-
-    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in;
-            switch (item.getItemId()) {
-                case R.id.nav_classes:
-                    //item.setChecked(true);
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
-                    startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //break;
-                case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //item.setChecked(true);
-                    //break;
-                case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), Join.class);
-                    startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //item.setChecked(true);
-                    //break;
-                case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
-                    startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //item.setChecked(true);
-                    //break;
-
-            }
-            return false;
-            //startActivity(in);
-        }
-
-    };*/
-
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.nav_classes:
-                    Intent First= new Intent(SettingsActivity.this, ClassSelectionActivity.class);
-                    startActivity(First);
-                    break;
-                case R.id.nav_settings:
-
-                    break;
-            }
-
-            return false;
-        }
-    };
 
 }

@@ -9,6 +9,7 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -24,17 +25,45 @@ public class JoinCreate extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_create);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_classes:
+                        Intent intent1 = new Intent(JoinCreate.this, ClassSelectionActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_map:
+                        Intent intent2 = new Intent(JoinCreate.this, MapsActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_study_mode:
+
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent3 = new Intent(JoinCreate.this, SettingsActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return false;
+            }
+        });
+
 
 //        joinButt = (Button) findViewById(R.id.joinButton);
 //        createButt = (Button) findViewById(R.id.createButton);
 //
-//        tfChalk = Typeface.createFromAsset(getAssets(), "fonts/ChalkDust.tff");
+//        tfChalk = Typeface.createFromAsset(getAssets(), "fonts/ChalkDust");
 //        joinButt.setTypeface(tfChalk);
 //
-//        tfWhite = Typeface.createFromAsset(getAssets(), "fonts/ChalkWhite.tff");
+//        tfWhite = Typeface.createFromAsset(getAssets(), "fonts/ChalkWhite");
 //        createButt.setTypeface(tfWhite);
     }
 
@@ -60,40 +89,6 @@ public class JoinCreate extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in;
-            switch (item.getItemId()) {
-                case R.id.nav_classes:
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    //return true;
-                    break;
-                case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                //return true;
-                case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), JoinCreate.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-            }
-            return false;
-        }
-
-    };
 
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);

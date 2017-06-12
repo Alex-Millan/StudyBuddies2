@@ -54,10 +54,7 @@
             android:name=".Join"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation" />
-        <activity
-            android:name=".SettingsActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation" />
+
         <activity
             android:name=".CreateActivity"
             android:screenOrientation="portrait"

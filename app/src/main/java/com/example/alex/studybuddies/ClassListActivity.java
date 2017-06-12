@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.support.design.internal.BottomNavigationItemView;
@@ -180,9 +181,36 @@ public class ClassListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_list);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_classes:
+                        break;
+                    case R.id.nav_map:
+                        Intent intent1 = new Intent(ClassListActivity.this, MapsActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_study_mode:
+                        Intent intent2 = new Intent(ClassListActivity.this, JoinCreate.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent3 = new Intent(ClassListActivity.this, SettingsActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return false;
+            }
+        });
+
         aList = new ArrayList<>();
 
         Bundle extras = getIntent().getExtras();
@@ -211,42 +239,6 @@ public class ClassListActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in;
-            switch (item.getItemId()) {
-                case R.id.nav_classes:
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    //return true;
-                    break;
-                case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                //return true;
-                case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-            }
-            return false;
-        }
-
-    };
 
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
