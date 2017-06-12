@@ -113,9 +113,11 @@ public class ClassSelectionActivity extends AppCompatActivity {
         coursesDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //selectedSubject = adapterView.getItemAtPosition(i).toString();
                 selectedClass = adapterView.getItemAtPosition(i).toString();
-                if (!selectedColor.equals("[Select a course]")) {
+                selectedClass = adapterView.getItemAtPosition(i).toString();
+                if (selectedClass.equals("[Select a course]")) {
+                }
+                else{
                     Toast.makeText(getApplicationContext(), "Selected Course: " + selectedClass, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -169,7 +171,10 @@ public class ClassSelectionActivity extends AppCompatActivity {
                     gValue = "13";
                     bValue = "240";
                 }
-                if (!selectedColor.equals("[Select a color]")) {
+                if (selectedColor.equals("[Select a color]")) {
+
+                }
+                else{
                     Toast.makeText(getApplicationContext(), "Selected Color: " + selectedColor, Toast.LENGTH_SHORT).show();
                 }
             }
