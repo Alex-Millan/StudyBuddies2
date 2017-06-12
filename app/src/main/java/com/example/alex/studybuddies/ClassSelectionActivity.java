@@ -126,13 +126,4 @@ public class ClassSelectionActivity extends AppCompatActivity {
         }
     }
 
-
-    public void goToJoinCreate(View V) {
-
-        // Go to Create activity, dont forget Join Activity
-        Intent intent = new Intent(this, JoinCreate.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
-
 }

@@ -23,21 +23,11 @@
                 android:id="@+id/classTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="8dp"
                 android:text="Class:"
                 android:textColor="#000"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHorizontal_bias="0.134"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.048"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp" />
+                android:layout_marginLeft="70dp"
+                android:layout_marginTop="20dp"/>
 
             <!--DropDown-->
 
@@ -47,7 +37,8 @@
                 android:layout_height="wrap_content"
                 android:entries="@array/country_arrays"
                 android:layout_toRightOf="@+id/classTextView"
-                android:layout_marginLeft="8dp" />
+                android:layout_marginLeft="10dp"
+                android:layout_alignBaseline="@+id/classTextView"/>
 
             <!--<Spinner-->
             <!--android:id="@+id/spinner2"-->
@@ -62,10 +53,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Submit"
-                android:layout_marginTop="35dp"
-                android:layout_alignParentBottom="true"
-                app:layout_constraintTop_toBottomOf="@+id/editText"
-                app:layout_constraintLeft_toLeftOf="@+id/classTextView"/>
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/editText"/>
 
 
 
@@ -75,21 +65,22 @@
                 android:id="@+id/startTimeTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
                 android:text="Start:"
                 android:textColor="#000"
                 android:textSize="20dp"
-                android:layout_marginLeft="0dp"
-                android:layout_above="@+id/endTimeTextView"/>
+                android:layout_marginTop="50dp"
+                android:layout_alignStart="@+id/classTextView"
+                android:layout_alignLeft="@id/classTextView"
+                android:layout_below="@+id/classTextView"/>
 
             <Button
                 android:id="@+id/startTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Start Time"
-                android:layout_marginLeft="8dp"
-                android:layout_toRightOf="@+id/startTimeTextView"
-                android:layout_above="@+id/endTimeTextView"/>
+                android:layout_marginLeft="10dp"
+                android:layout_alignBaseline="@+id/startTimeTextView"
+                android:layout_toRightOf="@+id/startTimeTextView"/>
 
             <TextView
                 android:id="@+id/endTimeTextView"
@@ -98,16 +89,19 @@
                 android:text="End:"
                 android:textColor="#000"
                 android:textSize="20dp"
-                android:layout_above="@+id/locationTextView"
-                android:layout_marginTop="47dp"
-                android:layout_marginLeft="0dp" />
+                android:layout_below="@+id/startTimeTextView"
+                android:layout_marginTop="50dp"
+                android:layout_alignStart="@+id/classTextView"
+                android:layout_alignLeft="@id/classTextView"/>
 
             <Button
                 android:id="@+id/endTimeButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_alignBaseline="@+id/endTimeTextView"
                 android:text="End Time"
+                android:layout_alignStart="@+id/startTimeButton"
+                android:layout_alignLeft="@id/classTextView"
                 android:layout_above="@+id/locationTextView"
                 android:layout_toRightOf="@+id/endTimeTextView"/>
 
@@ -119,20 +113,21 @@
                 android:text="Location:"
                 android:textColor="#000"
                 android:textSize="20dp"
-                android:layout_marginTop="47dp"
-                android:layout_above="@+id/editText"/>
+                android:layout_marginTop="50dp"
+                android:layout_alignStart="@+id/classTextView"
+                android:layout_alignLeft="@id/classTextView"
+                android:layout_below="@+id/endTimeTextView"/>
 
             <Button
                 android:id="@+id/locationButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
+                android:layout_marginLeft="10dp"
                 android:onClick="goToMap"
                 android:text="open Map"
-                android:layout_above="@+id/editText"
-                android:layout_toRightOf="@id/locationTextView"
-                app:layout_constraintBaseline_toBaselineOf="@+id/locationTextView"
-                app:layout_constraintLeft_toRightOf="@+id/locationTextView" />
+                android:layout_below="@+id/endTimeTextView"
+                android:layout_toRightOf="@+id/locationTextView"
+                android:layout_alignBaseline="@+id/locationTextView"/>
 
 
             <!--EditText-->
@@ -144,8 +139,10 @@
                 android:ems="10"
                 android:inputType="textMultiLine"
                 android:hint="@string/edit_hint"
-                android:layout_above="@+id/btnSubmit"
-                android:layout_marginTop="0dp"/>
+                android:layout_below="@+id/locationTextView"
+                android:layout_marginTop="50dp"
+                android:layout_alignStart="@+id/classTextView"
+                android:layout_alignLeft="@id/classTextView"/>
 
             <!--<Button-->
             <!--android:id="@+id/button"-->
