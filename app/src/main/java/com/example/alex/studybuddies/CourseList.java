@@ -28,6 +28,7 @@ public class CourseList  {
             String line;
             while ((line = r.readLine()) != null) {
                 courses.add(line);
+
             }
         } catch (IOException e) {
             e.printStackTrace();

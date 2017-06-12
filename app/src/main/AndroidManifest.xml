@@ -54,6 +54,7 @@
             android:name=".Join"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation" />
+
         <activity
             android:name=".CreateActivity"
             android:screenOrientation="portrait"
@@ -69,6 +70,10 @@
         <activity
             android:name=".ClassSelectionActivity"
             android:label="@string/title_activity_class_selection"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ClassListActivity"
+            android:label="ClassList"
             android:screenOrientation="portrait"/>
     </application>
 

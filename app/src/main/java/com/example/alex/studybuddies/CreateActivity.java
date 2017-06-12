@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -27,6 +28,7 @@ import android.widget.TextView;
 // TimePicker
 import android.app.AlertDialog;
 
+import java.io.FileNotFoundException;
 import java.lang.String;
 import java.lang.reflect.Field;
 
@@ -35,6 +37,7 @@ public class CreateActivity extends AppCompatActivity {
     // DropDown
     private Spinner spinner1, spinner2;
     private Button btnSubmit;
+    String course;
 
     // TimePicker Stuff
     private TimePicker timePicker1;
@@ -49,20 +52,34 @@ public class CreateActivity extends AppCompatActivity {
     int minute_2;
     String displayTime1;
     String displayTime2;
+    String latty;
+    String longy;
 
     // EditText
     EditText edit;
     String name;
 
+    // ClassInfo
+    ClassInfo classStuff;
 
+    //AppInfo
+    AppInfo appInfo;
+//    int numberOfClasses = appInfo.getSize();
+    //String i = appInfo.get(i).get("course");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        disableShiftMode(navigation);
+
+        latty = "null";
+        longy = "null";
+        Bundle change = getIntent().getExtras();
+        if (change == null) {
+        } else {
+            latty = change.getString("latitude");
+            longy = change.getString("longitude");
+        }
 
         // Drop-Down
 //        addItemsOnSpinner2();
@@ -71,6 +88,43 @@ public class CreateActivity extends AppCompatActivity {
 
         // TimePicker
         showTimePickerDialog();
+
+        // ClassInfo
+        classStuff = new ClassInfo();
+
+        // AppInfo
+        //appInfo = AppInfo.getInstance(this);
+
+        // Navigation
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        disableShiftMode(navigation);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(2);
+        menuItem.setChecked(true);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_classes:
+                        Intent intent1 = new Intent(CreateActivity.this, ClassSelectionActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_map:
+                        Intent intent2 = new Intent(CreateActivity.this, MapsActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_study_mode:
+
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent3 = new Intent(CreateActivity.this, SettingsActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return false;
+            }
+        });
 
     }
 
@@ -120,6 +174,8 @@ public class CreateActivity extends AppCompatActivity {
                     minute_1 = minute;
                     displayTime1 = formatTime(hourOfDay, minute_1);
 
+                    Button btnStartTime = (Button) findViewById(R.id.startTimeButton);
+                    btnStartTime.setText(displayTime1);
                     Toast.makeText(CreateActivity.this, displayTime1, Toast.LENGTH_SHORT).show();
                 }
             };
@@ -133,6 +189,8 @@ public class CreateActivity extends AppCompatActivity {
                     minute_2 = minute;
                     displayTime2 = formatTime(hour_2, minute_2);
 
+                    Button btnEndTime = (Button) findViewById(R.id.endTimeButton);
+                    btnEndTime.setText(displayTime2);
                     Toast.makeText(CreateActivity.this, displayTime2, Toast.LENGTH_SHORT).show();
                 }
             };
@@ -185,12 +243,36 @@ public class CreateActivity extends AppCompatActivity {
 
                 // getting text from edittext
                 name = edit.getText().toString();
+
+                if(name.equals("")){
+                    name = "No Description";
+                }
+
 //                text.setText(name);
+                course = String.valueOf(spinner1.getSelectedItem());
+
+
+                // ClassInfo
+                String tempCourse = "AMS 10";
+                // Temp long and lat values
+                String lat = latty;
+                String longi = longy;
+
+                try {
+                    classStuff.update(tempCourse, lat, longi, displayTime1, displayTime2, name);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+//                (String course, String lat, String longi, String startTime, String endTime, String desc)
+
 
                 Toast.makeText(CreateActivity.this,
-                        "DropDown : " + String.valueOf(spinner1.getSelectedItem()) +
+                        "DropDown : " + course +
                                 "\nStart: " + displayTime1 +
                                 "\nEnd: " + displayTime2 +
+                                "\nLat: " + lat +
+                                "\nLong: " + longi +
                                 "\nDescription: " + name,
                         Toast.LENGTH_SHORT).show();
             }
@@ -236,46 +318,11 @@ public class CreateActivity extends AppCompatActivity {
     public void goToMap(View V) {
 
         // Go to Map activity
-        Intent intent = new Intent(this, MapsActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
+        Intent intent2 = new Intent(this, MapsActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("draggable",true);
+        startActivity(intent2);
     }
-
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in;
-            switch (item.getItemId()) {
-                case R.id.nav_classes:
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    //return true;
-                    break;
-                case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                //return true;
-                case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), JoinCreate.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-            }
-            return false;
-        }
-
-    };
 
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
