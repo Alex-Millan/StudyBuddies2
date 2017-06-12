@@ -20,6 +20,8 @@ import java.util.ArrayList;
 
 public class ClassSelectionActivity extends AppCompatActivity {
 
+    AppInfo appInfo;
+
     Spinner coursesDropdown;
     Spinner colorDropdown;
     String[] subjectItems;
@@ -35,49 +37,88 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
     private static final String TAG = "LOG_TAG";
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in;
+            Intent in = new Intent();
             switch (item.getItemId()) {
                 case R.id.nav_classes:
                     in=new Intent(getBaseContext(),ClassSelectionActivity.class);
                     startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
+                    //overridePendingTransition(0, 0);
+
+                    return true;
+                    //item.setChecked(true);
+                    //break;
                 case R.id.nav_map:
                     in=new Intent(getBaseContext(), MapsActivity.class);
                     startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
+                    //overridePendingTransition(0, 0);
+                    return true;
+                    //item.setChecked(true);
+                    //break;
                 case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
+                    in=new Intent(getBaseContext(), Join.class);
                     startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
+                    //overridePendingTransition(0, 0);
+                    return true;
+                    //item.setChecked(true);
+                    //break;
                 case R.id.nav_settings:
                     in=new Intent(getBaseContext(), SettingsActivity.class);
                     startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
+                    //overridePendingTransition(0, 0);
+                    return true;
+                    //item.setChecked(true);
+                    //break;
             }
             return false;
         }
 
+    };*/
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()){
+                case R.id.nav_classes:
+
+                    break;
+                case R.id.nav_settings:
+                    Intent Second= new Intent(ClassSelectionActivity.this, SettingsActivity.class);
+                    startActivity(Second);
+                    //overridePendingTransition(0, 0);
+                    break;
+            }
+
+            return false;
+        }
     };
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_selection);
         myCourseList = new CourseList(this);
+        appInfo = AppInfo.getInstance(this);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
         colorDropdown = (Spinner) findViewById(R.id.colorSpinner);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras.getString("course") != null) {
+            String classString = extras.getString("course");
+        }
+        if (extras.getString("color") != null) {
+            String colorString = extras.getString("color");
+        }
 
         String[] list = new String[myCourseList.getSize()+1];
         int totalSize = myCourseList.getSize();
@@ -183,5 +224,9 @@ public class ClassSelectionActivity extends AppCompatActivity {
             intent.putExtra("color",selectedColor);
             startActivity(intent);
         }
+
+
+        //appInfo.addClass();
+
     }
 }

@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onSignIn(View v) {
-
         EditText userEmail = (EditText) findViewById(R.id.userEmail);
         EditText userPassword = (EditText) findViewById(R.id.userPassword);
 

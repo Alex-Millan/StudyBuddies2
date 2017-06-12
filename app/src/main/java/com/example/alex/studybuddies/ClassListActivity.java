@@ -206,8 +206,8 @@ public class ClassListActivity extends AppCompatActivity {
 
     public void onClickAddClass(View view) {
         Intent intent = new Intent(ClassListActivity.this, ClassSelectionActivity.class);
-        //intent.putExtra("course", selectedClass);
-        //intent.putExtra("color",selectedColor);
+        intent.putExtra("course", classString);
+        intent.putExtra("color",colorString);
         startActivity(intent);
     }
 

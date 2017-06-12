@@ -70,6 +70,14 @@
             android:name=".ClassSelectionActivity"
             android:label="@string/title_activity_class_selection"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ClassListActivity"
+            android:label="ClassList"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SettingsActivity"
+            android:label="Settings"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
