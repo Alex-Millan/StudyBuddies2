@@ -37,7 +37,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
     private static final String TAG = "LOG_TAG";
 
-    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -89,13 +89,13 @@ public class ClassSelectionActivity extends AppCompatActivity {
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
         colorDropdown = (Spinner) findViewById(R.id.colorSpinner);
 
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras.getString("course") != null) {
             String classString = extras.getString("course");
         }
         if (extras.getString("color") != null) {
             String colorString = extras.getString("color");
-        }
+        }*/
 
         String[] list = new String[myCourseList.getSize()+1];
         int totalSize = myCourseList.getSize();
@@ -203,7 +203,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
         }
 
 
-        //appInfo.addClass();
+        appInfo.addClass(selectedClass,"100","100","100");
 
     }
 }
