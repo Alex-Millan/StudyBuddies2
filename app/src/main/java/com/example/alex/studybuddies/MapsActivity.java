@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.lang.reflect.Field;
 
 import static android.R.attr.data;
+import static com.example.alex.studybuddies.R.id.map;
 
 
 // Auto FORMAT Ctrl + ALT + L
@@ -63,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         disableShiftMode(navigation);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+                .findFragmentById(map);
         mapFragment.getMapAsync(this);
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
@@ -120,12 +121,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
         ClassInfo class1 = new ClassInfo();
         class1.getCourse("Abigail", this); //Initialize the course list to read from
-        markerOptions.title("Current Position " + class1.getCourseSize());
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
         //move map camera
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
@@ -166,6 +163,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     + hour2 + ":" + minute2);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
+
+        }
+
+
+        boolean startDrag = false;
+        Bundle CreateActivity = getIntent().getExtras();
+        if (change == null) {
+        } else {
+            startDrag = CreateActivity.getBoolean("draggable");
+        }
+        if(startDrag == true){
+            getStudyLocation(latLng);
         }
 
 
@@ -307,6 +316,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             //You can add here other case statements according to your requirement.
         }
     }
+
+
+    public void getStudyLocation(LatLng location){
+        mCurrLocationMarker = mMap.addMarker(new MarkerOptions()
+                .position(location)
+                .title("DRAGGABLE")
+                .draggable(true));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 18));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(18), 2000, null);
+
+        mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
+            @Override
+            public void onMarkerDragStart(Marker arg0) {
+                // TODO Auto-generated method stub
+                Log.d("System out", "onMarkerDragStart..."+arg0.getPosition().latitude+"..."+arg0.getPosition().longitude);
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            public void onMarkerDragEnd(Marker arg0) {
+                // TODO Auto-generated method stub
+                Log.d("System out", "onMarkerDragEnd..."+arg0.getPosition().latitude+"..."+arg0.getPosition().longitude);
+                String latty = Double.toString(arg0.getPosition().latitude);
+                String longy = Double.toString(arg0.getPosition().longitude);
+                mMap.animateCamera(CameraUpdateFactory.newLatLng(arg0.getPosition()));
+                returnLocation(latty, longy);
+            }
+
+            @Override
+            public void onMarkerDrag(Marker arg0) {
+                // TODO Auto-generated method stub
+                Log.i("System out", "onMarkerDrag...");
+            }
+        });
+    }
+
+    public void returnLocation(String lattytude, String longytude){
+        Intent intent2 = new Intent(this, CreateActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("latitude",lattytude);
+        intent2.putExtra("longitude",longytude);
+        startActivity(intent2);
+    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
