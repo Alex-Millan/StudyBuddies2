@@ -47,7 +47,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
                     break;
                 //return true;
                 case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
+                    in=new Intent(getBaseContext(), JoinCreate.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
                     break;
