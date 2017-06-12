@@ -72,7 +72,8 @@ public class AppInfo {
     }
 
     public void addClass(String myCourse, String red, String green, String blue) {
-        int i = instance.courses.size()-1;
+        //new entry added will go to the current size of the arraylist
+        int i = instance.getSize();
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
 
@@ -85,7 +86,7 @@ public class AppInfo {
         //Stores the data into the current loaded app
         HashMap<String, String> temp = new HashMap<>();
         temp.put(KEY_COURSE, myCourse);
-        temp.put(KEY_RED, myCourse);
+        temp.put(KEY_RED, red);
         temp.put(KEY_GREEN, green);
         temp.put(KEY_BLUE, blue);
         instance.courses.add(temp);
@@ -95,7 +96,7 @@ public class AppInfo {
     public void delete(int i){
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
-        //i++
+
         editor.remove(KEY_COURSE + i);
         editor.remove(KEY_RED + i);
         editor.remove(KEY_GREEN + i);
@@ -111,7 +112,8 @@ public class AppInfo {
     }
 
     public void addStudyGroup(String c, String p, String t) {
-        int i = instance.coursesJoined.size() - 1;
+
+        int i = instance.coursesJoined.size();
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(KEY_JOINED + i, c);
@@ -136,7 +138,7 @@ public class AppInfo {
     public void deleteHash(int i){
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
-        i++;
+
         editor.remove(KEY_JOINED + i);
         editor.remove(KEY_POSITION + i);
         editor.remove(KEY_TIME + i);
