@@ -162,7 +162,7 @@ public class Join extends AppCompatActivity{
         for (int i = 1; i < appInfo.getHashSize(); i++) {
             if(appInfo.coursesJoined.get(i).get("course_joined") != "null") {
                 aList.add(new ListElement(
-                        appInfo.coursesJoined.get(i).get("course_joined"), appInfo.coursesJoined.get(i).get("time") + i, "Delete"
+                        appInfo.coursesJoined.get(i).get("course_joined"), appInfo.coursesJoined.get(i).get("time"), "Delete"
                 ));
             }
         }
