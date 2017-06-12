@@ -127,10 +127,10 @@ public class ClassSelectionActivity extends AppCompatActivity {
     }
 
 
-    public void goToCreate(View V) {
+    public void goToJoinCreate(View V) {
 
         // Go to Create activity, dont forget Join Activity
-        Intent intent = new Intent(this, CreateActivity.class);
+        Intent intent = new Intent(this, JoinCreate.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

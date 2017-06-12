@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="152dp"
         android:text="Join"
+        android:onClick="goToJoin"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginLeft="8dp"
         app:layout_constraintLeft_toLeftOf="parent"

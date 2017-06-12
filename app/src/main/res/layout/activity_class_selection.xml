@@ -80,7 +80,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="35dp"
                 android:text="Button"
-                android:onClick="goToCreate"/>
+                android:onClick="goToJoinCreate"/>
 
         </RelativeLayout>
     </FrameLayout>
