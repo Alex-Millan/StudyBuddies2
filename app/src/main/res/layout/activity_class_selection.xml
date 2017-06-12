@@ -72,6 +72,16 @@
                 android:onClick="onClickAddClass"
                 android:text="Add Class" />
 
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addClassButton"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="35dp"
+                android:text="Button"
+                android:onClick="goToJoinCreate"/>
+
         </RelativeLayout>
     </FrameLayout>
 

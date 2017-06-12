@@ -1,6 +1,7 @@
 package com.example.alex.studybuddies;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
@@ -27,6 +28,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import static android.R.attr.data;
+
 
 // Auto FORMAT Ctrl + ALT + L
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -38,6 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
+
+    AppInfo appInfo;
 
     GoogleApiClient mGoogleApiClient;
 
@@ -52,6 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             checkLocationPermission();
         }
+        appInfo = AppInfo.getInstance(this);
     }
 
 
@@ -99,40 +105,66 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (mCurrLocationMarker != null) {
             mCurrLocationMarker.remove();
         }
-
         //Place current location marker
 
         LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
-        markerOptions.title("Current Position");
+        ClassInfo class1 = new ClassInfo();
+        class1.getCourse("Abigail",this); //Initialize the course list to read from
+        markerOptions.title("Current Position " + class1.getCourseSize());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
+        //move map camera
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
+        final double currentLatitude = location.getLatitude();
+        final double currentLongitude = location.getLongitude();
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
 
-
-        ClassInfo abigail = new ClassInfo();
-        abigail.getCourse("Abigail", this); //Initialize the course list to read from
-        for (int i = 0; i < abigail.getCourseSize(); i++) {
-            int start = abigail.startTime.getHour(i); // Returns the hour of the first item in the list
-            LatLng position = new LatLng(abigail.loc.getLattidue(i), abigail.loc.getLongitude(i));
+        //ClassInfo class1 = new ClassInfo();
+        class1.getCourse("Abigail",this); //Initialize the course list to read from
+        for (int i = 0; i < class1.getCourseSize(); i++) {
+            int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
+            LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
             markerOptions.position(position);
             markerOptions.title("Study Room  " + i);
-            int myMin = abigail.startTime.getMinute(i);
-            String minute = String.format("%.02d", myMin);
-            markerOptions.snippet(abigail.startTime.getHour(i) + ":" + minute);
+            int hour1 = class1.startTime.getHour(i);
+            int hour2 = class1.endTime.getHour(i);
+            int myMin = class1.startTime.getMinute(i);
+            int myMin2 = class1.startTime.getMinute(i);
+            String minute = String.format("%02d", myMin);
+            String minute2 = String.format("%02d", myMin2);
+            if(hour1 > 12){
+                hour1 -= 12;
+            }
+            if(hour2 > 12){
+                hour2 -= 12;
+            }
+            markerOptions.snippet(hour1 + ":" + minute + " - "
+                                + hour2 + ":" + minute2);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
-
-        //move map camera
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15)); //change number to change radius
 
 
         //stop location updates
         if (mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                //MainActivity main = new MainActivity();
+                //main.Stay();
+                appInfo.addStudyGroup(marker.getTitle(), marker.getPosition().toString(), marker.getSnippet());
+                Intent intent2 = new Intent(MapsActivity.this, Join.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent2);
+            }
+        });
 
     }
 
@@ -163,6 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
         }
     }
+
 
     @Override
     public void onConnectionSuspended(int i) {
@@ -242,3 +275,4 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 }
+
