@@ -19,7 +19,7 @@ public class AppInfo {
     }
 
     // Here are some values we want to keep global.
-    public static ArrayList<String> courses = new ArrayList<String>();
+    public static ArrayList<HashMap<String, String>> courses = new ArrayList<>();
     public static ArrayList<HashMap<String, String>> coursesJoined = new ArrayList<>();
 
 
@@ -31,9 +31,15 @@ public class AppInfo {
             instance.my_context = context;
             SharedPreferences settings = context.getSharedPreferences(MainActivity.MYPREFS, 0);
             int size = settings.getInt("SavedSize", 0);
-            courses.add("null");
             for (int i = 0; i < size ; i++) {
-                instance.courses.add(settings.getString(courses.get(i), "null"));
+                String myCourse = settings.getString("course"+i, "null");
+                String pos = settings.getString("position"+i, "null");
+                String time = settings.getString("time"+i, "null");
+                HashMap<String, String> tempClass = new HashMap<>();
+                tempClass.put("class", myCourse);
+                tempClass.put("position", pos);
+                tempClass.put("time", time);
+                instance.coursesJoined.add(tempClass);
             }
 
             int size2 = settings.getInt("HashSize", 0);
@@ -59,26 +65,26 @@ public class AppInfo {
         if(i < 0){
             i = 0;
         }
-        editor.putInt("SavedSize", courses.size());
         editor.putString(courses.get(i), c);
-        editor.commit();
         instance.courses.add(c);
+        editor.putInt("SavedSize", instance.getSize());
+        editor.commit();
     }
 
     public void addStudyGroup(String c, String p, String t) {
-        int i = instance.coursesJoined.size()-1;
+        int i = instance.coursesJoined.size() - 1;
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("course"+i, c);
         editor.putString("position" + i, p);
         editor.putString("time" + i, t);
-        editor.putInt("HashSize", coursesJoined.size());
-        editor.commit();
         HashMap<String, String> tempClass = new HashMap<>();
         tempClass.put("class", c);
         tempClass.put("position", p);
         tempClass.put("time", t);
         instance.coursesJoined.add(tempClass);
+        editor.putInt("HashSize", instance.getHashSize());
+        editor.commit();
     }
 
     public int getSize(){
@@ -102,6 +108,7 @@ public class AppInfo {
     public void deleteHash(int i){
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
+        i++;
         editor.remove("course"+i);
         editor.remove("position" + i);
         editor.remove("time" + i);

@@ -2,6 +2,7 @@ package com.example.alex.studybuddies;
 
 
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -106,6 +107,7 @@ public class Join extends AppCompatActivity{
                     aList.remove(i);
                     appInfo.deleteHash(i);
                     aa.notifyDataSetChanged();
+                    Refresh();
                 }
             });
 
@@ -119,11 +121,30 @@ public class Join extends AppCompatActivity{
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, s, duration);
                     toast.show();
+                    String i[] = s.split(" ");
+                    int index = Integer.parseInt(i[1]);
+                    String temp = appInfo.coursesJoined.get(index).get("position");
+                    ChangetoMaps(temp);
+
                 }
             });
 
             return newView;
         }
+    }
+
+    public void Refresh(){
+        Intent intent = new Intent(this, Join.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    public void ChangetoMaps(String location){
+        Intent intent2 = new Intent(this, MapsActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("flag",true);
+        intent2.putExtra("location",location);
+        startActivity(intent2);
     }
 
     private MyAdapter aa;

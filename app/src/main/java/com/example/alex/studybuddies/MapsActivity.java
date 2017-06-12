@@ -6,9 +6,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationItemView;
+import android.support.design.internal.BottomNavigationMenuView;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
@@ -27,6 +33,8 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.lang.reflect.Field;
 
 import static android.R.attr.data;
 
@@ -50,6 +58,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        disableShiftMode(navigation);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -179,6 +190,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public static void ViewClass(String location) {
         String[] latlong = location.split("\\(");
+        System.out.print("YOURMOM   " + location);
+        System.out.println();
+        Log.i("YOURMUM   ", location);
         String[] position = latlong[1].split(",");
         double place1 = Double.parseDouble(position[0]);
         String[] longitude = position[1].split("\\)");
@@ -291,6 +305,62 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             // other 'case' lines to check for other permissions this app might request.
             //You can add here other case statements according to your requirement.
+        }
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Intent in;
+            switch (item.getItemId()) {
+                case R.id.nav_classes:
+                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
+                    startActivity(in);
+                    overridePendingTransition(0, 0);
+                    //return true;
+                    break;
+                case R.id.nav_map:
+                    in=new Intent(getBaseContext(), MapsActivity.class);
+                    startActivity(in);
+                    overridePendingTransition(0, 0);
+                    break;
+                //return true;
+                case R.id.nav_study_mode:
+                    in=new Intent(getBaseContext(), Join.class);
+                    startActivity(in);
+                    overridePendingTransition(0, 0);
+                    break;
+                case R.id.nav_settings:
+                    in=new Intent(getBaseContext(), SettingsActivity.class);
+                    startActivity(in);
+                    overridePendingTransition(0, 0);
+                    break;
+            }
+            return false;
+        }
+
+    };
+
+    public static void disableShiftMode(BottomNavigationView view) {
+        BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
+        try {
+            Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
+            shiftingMode.setAccessible(true);
+            shiftingMode.setBoolean(menuView, false);
+            shiftingMode.setAccessible(false);
+            for (int i = 0; i < menuView.getChildCount(); i++) {
+                BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
+                //noinspection RestrictedApi
+                item.setShiftingMode(false);
+                //noinspection RestrictedApi
+                item.setChecked(item.getItemData().isChecked());
+            }
+        } catch (NoSuchFieldException e) {
+            //Log.e("BNVHelper", "Unable to get shift mode field", e);
+        } catch (IllegalAccessException e) {
+            //Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
     }
 }
