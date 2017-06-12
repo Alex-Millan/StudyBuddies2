@@ -1,6 +1,7 @@
 package com.example.alex.studybuddies;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -10,22 +11,29 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 import java.lang.reflect.Field;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
-import android.support.design.widget.BottomNavigationView;
 import android.widget.Toast;
+import java.util.ArrayList;
 
 
 public class ClassSelectionActivity extends AppCompatActivity {
 
-    Spinner subjectDropdown;
     Spinner coursesDropdown;
+    Spinner colorDropdown;
     String[] subjectItems;
-    String selectedSubject;
-    String[] coursesItems;
     String selectedCourseNumber;
+    String selectedClass;
+    String selectedColor;
+
+    String rgb;
+
+    CourseList myCourseList;
+
+    ArrayList<String> list;
+
+    private static final String TAG = "LOG_TAG";
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -38,14 +46,12 @@ public class ClassSelectionActivity extends AppCompatActivity {
                     in=new Intent(getBaseContext(),ClassSelectionActivity.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
-                    //return true;
                     break;
                 case R.id.nav_map:
                     in=new Intent(getBaseContext(), MapsActivity.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
                     break;
-                //return true;
                 case R.id.nav_study_mode:
                     in=new Intent(getBaseContext(), MapsActivity.class);
                     startActivity(in);
@@ -66,19 +72,39 @@ public class ClassSelectionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_selection);
+        myCourseList = new CourseList(this);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
-        subjectDropdown = (Spinner) findViewById(R.id.subjectSpinner);
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
-        subjectItems = new String[]{"[Select a course subject]", "AMS", "BME", "CMPE", "CMPS", "CMPM", "TIM"};
+        colorDropdown = (Spinner) findViewById(R.id.colorSpinner);
+
+        String[] list = new String[myCourseList.getSize()+1];
+        int totalSize = myCourseList.getSize();
+        //Log.d(TAG, "list: " + totalSize);
+        list[0] = "[Select a course]";
+
+        for (int i = 0; i < myCourseList.getSize(); i++) {
+            list[i+1] = myCourseList.courses.get(i);
+        }
+
+        int arraySize = list.length;
+        //Log.d(TAG, "array: " + arraySize);
+
+        for(int j = 0; j < list.length; j++) {
+            //Log.d(TAG, "index: " + j + " subject: " + list[j]);
+        }
+
+        coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
+        subjectItems = list;
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, subjectItems);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        subjectDropdown.setAdapter(adapter1);
-        subjectDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        coursesDropdown.setAdapter(adapter1);
+        coursesDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedSubject = adapterView.getItemAtPosition(i).toString();
+                //selectedSubject = adapterView.getItemAtPosition(i).toString();
+                selectedClass = adapterView.getItemAtPosition(i).toString();
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -86,16 +112,34 @@ public class ClassSelectionActivity extends AppCompatActivity {
             }
         });
 
-        coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
-        coursesItems = new String[]{"[Select a course number]", "01", "02", "03", "04", "05", "06"};
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, coursesItems);
+        colorDropdown = (Spinner) findViewById(R.id.colorSpinner);
+        String[] colors = new String[]{"[Select a color]", "Red","Orange","Yellow","Green","Blue","Purple"};
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, colors);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        coursesDropdown.setAdapter(adapter2);
-        coursesDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        colorDropdown.setAdapter(adapter2);
+        colorDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedCourseNumber = adapterView.getItemAtPosition(i).toString();
-                if (!selectedCourseNumber.equals("[Select a course number]")) {
-                    Toast.makeText(getApplicationContext(), "Selected Course Number : " + selectedCourseNumber, Toast.LENGTH_SHORT).show();
+                selectedColor = adapterView.getItemAtPosition(i).toString();
+                if(selectedColor.equals("Red")) {
+                    rgb = "234,51,12";
+                }
+                else if(selectedColor.equals("Orange")) {
+                    rgb = "242,146,44";
+                }
+                else if(selectedColor.equals("Yellow")) {
+                    rgb = "245,241,27";
+                }
+                else if(selectedColor.equals("Green")) {
+                    rgb = "99,240,13";
+                }
+                else if(selectedColor.equals("Blue")) {
+                    rgb = "13,85,240";
+                }
+                else if(selectedColor.equals("Purple")) {
+                    rgb = "175,13,240";
+                }
+                if (!selectedColor.equals("[Select a color]")) {
+                    Toast.makeText(getApplicationContext(), "Selected Color: " + selectedCourseNumber, Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -126,4 +170,18 @@ public class ClassSelectionActivity extends AppCompatActivity {
         }
     }
 
+    public void onClickAddClass(View view) {
+        if (selectedClass.equals("[Select a course]")) {
+            Toast.makeText(ClassSelectionActivity.this, "Please choose a course",
+                    Toast.LENGTH_LONG).show();
+        } else if (selectedColor.equals("[Select a color]")) {
+            Toast.makeText(ClassSelectionActivity.this, "Please choose a color",
+                    Toast.LENGTH_LONG).show();
+        } else {
+            Intent intent = new Intent(ClassSelectionActivity.this, ClassListActivity.class);
+            intent.putExtra("course", selectedClass);
+            intent.putExtra("color",selectedColor);
+            startActivity(intent);
+        }
+    }
 }

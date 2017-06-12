@@ -9,7 +9,6 @@
     tools:context="com.example.alex.studybuddies.ClassSelectionActivity">
 
 
-
     <FrameLayout
         android:id="@+id/content"
         android:layout_width="match_parent"
@@ -21,7 +20,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/subjectTextView"
+                android:id="@+id/coursesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -30,47 +29,48 @@
                 android:layout_marginLeft="39dp"
                 android:layout_marginStart="39dp"
                 android:layout_marginTop="92dp"
-                android:text="Course Subject" />
+                android:text="Course" />
+
 
             <TextView
-                android:id="@+id/coursesTextView"
+                android:id="@+id/colorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="55dp"
-                android:text="Course Number"
-                android:layout_below="@+id/subjectTextView"
-                android:layout_alignLeft="@+id/subjectTextView"
-                android:layout_alignStart="@+id/subjectTextView" />
-
-            <Spinner
-                android:id="@+id/subjectSpinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/coursesTextView"
-                android:layout_toRightOf="@+id/coursesTextView"
-                android:layout_toEndOf="@+id/coursesTextView"
-                android:layout_marginLeft="28dp"
-                android:layout_marginStart="28dp"
-                android:spinnerMode="dropdown"/>
+                android:layout_alignEnd="@+id/coursesTextView"
+                android:layout_alignRight="@+id/coursesTextView"
+                android:layout_below="@+id/coursesTextView"
+                android:layout_marginTop="32dp"
+                android:text="Color" />
 
             <Spinner
                 android:id="@+id/coursesSpinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/coursesTextView"
-                android:layout_alignLeft="@+id/subjectSpinner"
-                android:layout_alignStart="@+id/subjectSpinner"
+                android:spinnerMode="dropdown"
+                android:layout_above="@+id/colorTextView"
+                android:layout_alignLeft="@+id/colorSpinner"
+                android:layout_alignStart="@+id/colorSpinner" />
+
+            <Spinner
+                android:id="@+id/colorSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/colorTextView"
+                android:layout_marginLeft="43dp"
+                android:layout_marginStart="43dp"
+                android:layout_toEndOf="@+id/colorTextView"
+                android:layout_toRightOf="@+id/colorTextView"
                 android:spinnerMode="dropdown" />
 
             <Button
                 android:id="@+id/addClassButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/coursesSpinner"
+                android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="103dp"
-                android:text="Add Class"
-                android:onClick="onClickAddClass" />
+                android:layout_marginBottom="78dp"
+                android:onClick="onClickAddClass"
+                android:text="Add Class" />
 
         </RelativeLayout>
     </FrameLayout>
