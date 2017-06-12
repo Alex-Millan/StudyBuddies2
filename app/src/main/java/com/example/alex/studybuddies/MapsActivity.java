@@ -161,13 +161,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
             }
-            Log.i("YOURMUM   ", "Load Complete size is " + params[0].getCourseSize());
-            return null;
+
+            return params[0];
     }
 
     @Override
     protected void onPostExecute(ClassInfo s) {
-
         super.onPostExecute(s);
         Log.i("YOURMUM   ", "Post Complete size is " + s.getCourseSize());
         loadMap(s);
