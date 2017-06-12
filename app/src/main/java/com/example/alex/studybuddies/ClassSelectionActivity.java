@@ -115,6 +115,9 @@ public class ClassSelectionActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //selectedSubject = adapterView.getItemAtPosition(i).toString();
                 selectedClass = adapterView.getItemAtPosition(i).toString();
+                if (!selectedColor.equals("[Select a course]")) {
+                    Toast.makeText(getApplicationContext(), "Selected Course: " + selectedClass, Toast.LENGTH_SHORT).show();
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
