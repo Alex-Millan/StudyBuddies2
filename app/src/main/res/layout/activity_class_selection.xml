@@ -72,6 +72,15 @@
                 android:onClick="onClickAddClass"
                 android:text="Add Class" />
 
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class Selection"
+                android:layout_above="@+id/coursesSpinner"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="33dp" />
+
 
         </RelativeLayout>
     </FrameLayout>

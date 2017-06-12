@@ -2,6 +2,7 @@ package com.example.alex.studybuddies;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -17,11 +18,14 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.widget.Toast;
 import java.util.ArrayList;
+import android.widget.TextView;
 
 
 public class ClassSelectionActivity extends AppCompatActivity {
 
     AppInfo appInfo;
+
+    TextView title;
 
     Spinner coursesDropdown;
     Spinner colorDropdown;
@@ -47,6 +51,10 @@ public class ClassSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_selection);
         myCourseList = new CourseList(this);
         appInfo = AppInfo.getInstance(this);
+
+        title = (TextView) findViewById(R.id.title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        title.setTypeface(myCustomFont);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         disableShiftMode(navigation);
