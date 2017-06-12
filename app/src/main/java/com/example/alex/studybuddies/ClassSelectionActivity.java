@@ -60,37 +60,14 @@ public class ClassSelectionActivity extends AppCompatActivity {
                     //item.setChecked(true);
                     //break;
                 case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), Join.class);
+                    in=new Intent(getBaseContext(), MapsActivity.class);
                     startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //item.setChecked(true);
-                    //break;
+                    overridePendingTransition(0, 0);
+                    break;
                 case R.id.nav_settings:
                     in=new Intent(getBaseContext(), SettingsActivity.class);
                     startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //item.setChecked(true);
-                    //break;
-            }
-            return false;
-        }
-
-    };*/
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()){
-                case R.id.nav_classes:
-
-                    break;
-                case R.id.nav_settings:
-                    Intent Second= new Intent(ClassSelectionActivity.this, SettingsActivity.class);
-                    startActivity(Second);
-                    //overridePendingTransition(0, 0);
+                    overridePendingTransition(0, 0);
                     break;
             }
 
