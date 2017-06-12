@@ -1,6 +1,7 @@
 package com.example.alex.studybuddies;
 
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.Random;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -112,11 +114,24 @@ public class Join extends AppCompatActivity{
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, s, duration);
                     toast.show();
+                    String i[] = s.split(" ");
+                    int index = Integer.parseInt(i[1]);
+                    String temp = appInfo.coursesJoined.get(index).get("position");
+                    ChangetoMaps(temp);
+
                 }
             });
 
             return newView;
         }
+    }
+
+    public void ChangetoMaps(String location){
+        Intent intent2 = new Intent(this, MapsActivity.class);
+        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent2.putExtra("flag",true);
+        intent2.putExtra("location",location);
+        startActivity(intent2);
     }
 
     private MyAdapter aa;

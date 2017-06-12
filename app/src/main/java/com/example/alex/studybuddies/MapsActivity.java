@@ -37,7 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         GoogleApiClient.OnConnectionFailedListener,
         LocationListener {
 
-    private GoogleMap mMap;
+    private static GoogleMap mMap;
     LocationRequest mLocationRequest;
     Location mLastLocation;
     Marker mCurrLocationMarker;
@@ -111,7 +111,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions markerOptions = new MarkerOptions();
         markerOptions.position(latLng);
         ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail",this); //Initialize the course list to read from
+        class1.getCourse("Abigail", this); //Initialize the course list to read from
         markerOptions.title("Current Position " + class1.getCourseSize());
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
@@ -120,11 +120,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
         final double currentLatitude = location.getLatitude();
         final double currentLongitude = location.getLongitude();
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-
+        boolean flag = false;
+        Bundle change = getIntent().getExtras();
+        if (change == null) {
+        } else {
+            flag = change.getBoolean("flag");
+        }
+        if (flag == true) {
+            ViewClass(change.getString("location"));
+        } else {
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        }
         //ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail",this); //Initialize the course list to read from
+        class1.getCourse("Abigail", this); //Initialize the course list to read from
         for (int i = 0; i < class1.getCourseSize(); i++) {
             int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
             LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
@@ -136,14 +145,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             int myMin2 = class1.startTime.getMinute(i);
             String minute = String.format("%02d", myMin);
             String minute2 = String.format("%02d", myMin2);
-            if(hour1 > 12){
+            if (hour1 > 12) {
                 hour1 -= 12;
             }
-            if(hour2 > 12){
+            if (hour2 > 12) {
                 hour2 -= 12;
             }
             markerOptions.snippet(hour1 + ":" + minute + " - "
-                                + hour2 + ":" + minute2);
+                    + hour2 + ":" + minute2);
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
             mCurrLocationMarker = mMap.addMarker(markerOptions);
         }
@@ -166,6 +175,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+    }
+
+    public static void ViewClass(String location) {
+        String[] latlong = location.split("\\(");
+        String[] position = latlong[1].split(",");
+        double place1 = Double.parseDouble(position[0]);
+        String[] longitude = position[1].split("\\)");
+        double place2 = Double.parseDouble(longitude[0]);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(place1, place2), 20));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(20), 2000, null);
     }
 
 
