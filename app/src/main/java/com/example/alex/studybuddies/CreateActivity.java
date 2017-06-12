@@ -139,6 +139,8 @@ public class CreateActivity extends AppCompatActivity {
                     minute_1 = minute;
                     displayTime1 = formatTime(hourOfDay, minute_1);
 
+                    Button btnStartTime = (Button) findViewById(R.id.startTimeButton);
+                    btnStartTime.setText(displayTime1);
                     Toast.makeText(CreateActivity.this, displayTime1, Toast.LENGTH_SHORT).show();
                 }
             };
@@ -152,6 +154,8 @@ public class CreateActivity extends AppCompatActivity {
                     minute_2 = minute;
                     displayTime2 = formatTime(hour_2, minute_2);
 
+                    Button btnEndTime = (Button) findViewById(R.id.endTimeButton);
+                    btnEndTime.setText(displayTime2);
                     Toast.makeText(CreateActivity.this, displayTime2, Toast.LENGTH_SHORT).show();
                 }
             };
