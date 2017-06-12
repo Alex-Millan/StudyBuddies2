@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -37,7 +38,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
     private static final String TAG = "LOG_TAG";
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
@@ -73,7 +74,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
             return false;
         }
-    };
+    };*/
 
 
 
@@ -83,9 +84,37 @@ public class ClassSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_selection);
         myCourseList = new CourseList(this);
         appInfo = AppInfo.getInstance(this);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         disableShiftMode(navigation);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(0);
+        menuItem.setChecked(true);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_classes:
+                        break;
+                    case R.id.nav_map:
+                        Intent intent1 = new Intent(ClassSelectionActivity.this, MapsActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_study_mode:
+                        Intent intent2 = new Intent(ClassSelectionActivity.this, Join.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent3 = new Intent(ClassSelectionActivity.this, SettingsActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return false;
+            }
+        });
+
+
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
         colorDropdown = (Spinner) findViewById(R.id.colorSpinner);
 
