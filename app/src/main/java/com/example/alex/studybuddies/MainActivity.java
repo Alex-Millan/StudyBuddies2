@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //FirebaseAuth.getInstance().signOut();   // REMOVE THIS TO STAY LOGGED IN
+        loggedIn(); //skip sign up
         authenticating();
         appInfo = AppInfo.getInstance(this);
         callbackManager = CallbackManager.Factory.create();
@@ -152,16 +153,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void onSignUp(View V) {
-        Intent intent2 = new Intent(this, MapsActivity.class);
+        Intent intent2 = new Intent(this, SignUpActivity.class);
         intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent2);
     }
 
-    public void onCrash(View V) {
-        Intent intent2 = new Intent(this, ExperimentActivity.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent2);
-    }
 
 
     private void loggedIn() {
@@ -170,16 +166,5 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void GoToMaps(View V) {
-        Intent intent2 = new Intent(this, MapsActivity.class);
-        intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent2);
-    }
-
-    public void GoToClasses(View V) {
-        Intent intent3 = new Intent(this, ClassSelectionActivity.class);
-        intent3.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent3);
-    }
 
 }

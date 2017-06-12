@@ -17,6 +17,8 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.location.LocationListener;
@@ -75,7 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Menu menu = navigation.getMenu();
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
-
+        Log.i("YOURMUM   ", "on create called!" );
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -116,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
+        Log.i("YOURMUM   ", "on Map Ready called!" );
         //Initialize Google Play Services
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(this,
@@ -144,24 +146,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
-
+        Log.i("YOURMUM   ", "on Location Changed called!" );
         ClassInfo class1 = new ClassInfo();
         class1.getCourse("Abigail"); //Initialize the course list to read from
-        new file_loaded().execute(class1, class1, class1);
+        file_loaded mTask; mTask = new file_loaded();
+        mTask.execute(class1,class1,class1);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.indeterminateBar);
+        progressBar.setVisibility(View.VISIBLE);
 
-
+        Log.i("YOURMUM   ", "on Location Changed done!" );
     }
 
 
     private class file_loaded extends AsyncTask<ClassInfo, ClassInfo, ClassInfo> {
         @Override
         protected ClassInfo doInBackground(ClassInfo... params) {
+            Log.i("YOURMUM   ", "Background Loading ");
             while ((params[0].isLOADING_FILE())) {
-                //DO NOTHING
-
-
+                //DO NOTHIN
             }
-
+            Log.i("YOURMUM   ", "Background done ");
             return params[0];
     }
 
@@ -256,12 +260,12 @@ public void loadMap(ClassInfo class1){
             startActivity(intent2);
         }
     });
+    ProgressBar progressBar = (ProgressBar) findViewById(R.id.indeterminateBar);
+    progressBar.setVisibility(View.INVISIBLE);
 }
 
     public static void ViewClass(String location) {
         String[] latlong = location.split("\\(");
-        System.out.print("YOURMOM   " + location);
-        System.out.println();
         Log.i("YOURMUM   ", location);
         String[] position = latlong[1].split(",");
         double place1 = Double.parseDouble(position[0]);
