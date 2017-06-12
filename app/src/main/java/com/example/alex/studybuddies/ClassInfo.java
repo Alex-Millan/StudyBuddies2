@@ -74,19 +74,33 @@ class ClassInfo {
         loc = new Location();
         startTime = new Time("start_time");
         endTime = new Time("end_time");
-        //updateFile = new DataBase();
+        updateFile = new DataBase();
     }
 
-    //Initialize the json list.
-    public void getCourse(String courseName, Context context) {
 
-        String jsonFile = this.getStudyTimes(context);
+    private boolean LOADING_FILE;
+    //Initialize the json list.
+    private String course_info = "";
+    public void getCourse(String course_name) {
+        course_info = course_name;
+        LOADING_FILE = true;
+        new grabCourseFile().execute();
+    }
+    public boolean isLOADING_FILE(){
+        return LOADING_FILE;
+    }
+
+    public void loadCourse() {
+        String jsonFile = this.getStudyTimes();
         JSONArray arr = null;
         JSONObject obj = null;
-
         try {
-            arr = new JSONObject(jsonFile).getJSONArray(courseName);
+            arr = new JSONObject(jsonFile).getJSONArray(course_info);
+
+            Log.i("YOURMUM   ", "loading currently  " + getCourseSize());
             for(int i = 0; i < arr.length(); i++) {
+
+                Log.i("YOURMUM   ", "in arr length " + getCourseSize());
                 obj = arr.getJSONObject(i);
                 String longitude = obj.getString("longitude");
                 String latitude = obj.getString("latitude");
@@ -107,15 +121,25 @@ class ClassInfo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        Log.i("YOURMUM   ", "Loading is done in activty " + getCourseSize());
+        LOADING_FILE = false;
     }
     public int getCourseSize() {
         return studyList.size();
     }
 
-    public String getStudyTimes(Context context){
+    public String getStudyTimes(){
         String json = null;
+
+        File update = updateFile.getLocalFile();
         try {
-            InputStream is = context.getAssets().open("DummyText.json");
+            InputStream is = null;
+            try {
+                is = new FileInputStream(update);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -128,7 +152,27 @@ class ClassInfo {
             return null;
         }
         return json;
+    }
 
+    private class grabCourseFile extends AsyncTask<String, String, String> {
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            loadCourse();
+        }
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                updateFile.grabFile();
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            while(!updateFile.isFileRead()){
+                //Wait until file is read
+            }
+            return null;
+        }
     }
 
     public void grabFile() {

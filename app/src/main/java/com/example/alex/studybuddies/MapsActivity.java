@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,9 +35,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 
 import static android.R.attr.data;
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
 
 // Auto FORMAT Ctrl + ALT + L
@@ -113,80 +116,110 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
-        if (mCurrLocationMarker != null) {
-            mCurrLocationMarker.remove();
-        }
-        //Place current location marker
 
-        LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
-        MarkerOptions markerOptions = new MarkerOptions();
-        markerOptions.position(latLng);
         ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail", this); //Initialize the course list to read from
-        markerOptions.title("Current Position " + class1.getCourseSize());
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-        mCurrLocationMarker = mMap.addMarker(markerOptions);
-        //move map camera
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
-        final double currentLatitude = location.getLatitude();
-        final double currentLongitude = location.getLongitude();
-        boolean flag = false;
-        Bundle change = getIntent().getExtras();
-        if (change == null) {
-        } else {
-            flag = change.getBoolean("flag");
-        }
-        if (flag == true) {
-            ViewClass(change.getString("location"));
-        } else {
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
-        }
-        //ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail", this); //Initialize the course list to read from
-        for (int i = 0; i < class1.getCourseSize(); i++) {
-            int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
-            LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
-            markerOptions.position(position);
-            markerOptions.title("Study Room  " + i);
-            int hour1 = class1.startTime.getHour(i);
-            int hour2 = class1.endTime.getHour(i);
-            int myMin = class1.startTime.getMinute(i);
-            int myMin2 = class1.startTime.getMinute(i);
-            String minute = String.format("%02d", myMin);
-            String minute2 = String.format("%02d", myMin2);
-            if (hour1 > 12) {
-                hour1 -= 12;
-            }
-            if (hour2 > 12) {
-                hour2 -= 12;
-            }
-            markerOptions.snippet(hour1 + ":" + minute + " - "
-                    + hour2 + ":" + minute2);
-            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-            mCurrLocationMarker = mMap.addMarker(markerOptions);
-        }
+        class1.getCourse("Abigail"); //Initialize the course list to read from
+        new file_loaded().execute(class1, class1, class1);
 
-
-        //stop location updates
-        if (mGoogleApiClient != null) {
-            LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
-        }
-
-        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                //MainActivity main = new MainActivity();
-                //main.Stay();
-                appInfo.addStudyGroup(marker.getTitle(), marker.getPosition().toString(), marker.getSnippet());
-                Intent intent2 = new Intent(MapsActivity.this, Join.class);
-                intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent2);
-            }
-        });
 
     }
+
+
+    private class file_loaded extends AsyncTask<ClassInfo, ClassInfo, ClassInfo> {
+        @Override
+        protected ClassInfo doInBackground(ClassInfo... params) {
+            while ((params[0].isLOADING_FILE())) {
+                //DO NOTHING
+
+
+            }
+            Log.i("YOURMUM   ", "Load Complete size is " + params[0].getCourseSize());
+            return null;
+    }
+
+    @Override
+    protected void onPostExecute(ClassInfo s) {
+
+        super.onPostExecute(s);
+        Log.i("YOURMUM   ", "Post Complete size is " + s.getCourseSize());
+        loadMap(s);
+    }
+
+}
+
+public void loadMap(ClassInfo class1){
+    if (mCurrLocationMarker != null) {
+        mCurrLocationMarker.remove();
+    }
+    //Place current location marker
+
+    LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+    MarkerOptions markerOptions = new MarkerOptions();
+    markerOptions.position(latLng);
+    markerOptions.title("Current Position " + class1.getCourseSize());
+    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+    mCurrLocationMarker = mMap.addMarker(markerOptions);
+    //move map camera
+    //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+    //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
+    final double currentLatitude = mLastLocation.getLatitude();
+    final double currentLongitude = mLastLocation.getLongitude();
+    boolean flag = false;
+    Bundle change = getIntent().getExtras();
+    if (change == null) {
+    } else {
+        flag = change.getBoolean("flag");
+    }
+    if (flag == true) {
+        ViewClass(change.getString("location"));
+    } else {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+    }
+    //ClassInfo class1 = new ClassInfo();
+    //class1.getCourse("Abigail"); //Initialize the course list to read from
+    for (int i = 0; i < class1.getCourseSize(); i++) {
+        int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
+        LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
+        markerOptions.position(position);
+        markerOptions.title("Study Room  " + i);
+        int hour1 = class1.startTime.getHour(i);
+        int hour2 = class1.endTime.getHour(i);
+        int myMin = class1.startTime.getMinute(i);
+        int myMin2 = class1.startTime.getMinute(i);
+        String minute = String.format("%02d", myMin);
+        String minute2 = String.format("%02d", myMin2);
+        if (hour1 > 12) {
+            hour1 -= 12;
+        }
+        if (hour2 > 12) {
+            hour2 -= 12;
+        }
+        markerOptions.snippet(hour1 + ":" + minute + " - "
+                + hour2 + ":" + minute2);
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        mCurrLocationMarker = mMap.addMarker(markerOptions);
+    }
+
+
+    //stop location updates
+    if (mGoogleApiClient != null) {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+    }
+
+    mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(Marker marker) {
+            //MainActivity main = new MainActivity();
+            //main.Stay();
+            appInfo.addStudyGroup(marker.getTitle(), marker.getPosition().toString(), marker.getSnippet());
+            Intent intent2 = new Intent(MapsActivity.this, Join.class);
+            ClassInfo test = new ClassInfo();
+            intent2.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent2);
+        }
+    });
+}
 
     public static void ViewClass(String location) {
         String[] latlong = location.split("\\(");
@@ -316,24 +349,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Intent in;
             switch (item.getItemId()) {
                 case R.id.nav_classes:
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
+                    in = new Intent(getBaseContext(), ClassSelectionActivity.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
                     //return true;
                     break;
                 case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
+                    in = new Intent(getBaseContext(), MapsActivity.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
                     break;
                 //return true;
                 case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), Join.class);
+                    in = new Intent(getBaseContext(), Join.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
                     break;
                 case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
+                    in = new Intent(getBaseContext(), SettingsActivity.class);
                     startActivity(in);
                     overridePendingTransition(0, 0);
                     break;
