@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -59,9 +60,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        disableShiftMode(navigation);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(map);
@@ -70,6 +68,37 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             checkLocationPermission();
         }
         appInfo = AppInfo.getInstance(this);
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        disableShiftMode(navigation);
+        Menu menu = navigation.getMenu();
+        MenuItem menuItem = menu.getItem(1);
+        menuItem.setChecked(true);
+
+        navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_classes:
+                        Intent intent1 = new Intent(MapsActivity.this, ClassSelectionActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.nav_map:
+
+                        break;
+                    case R.id.nav_study_mode:
+                        Intent intent2 = new Intent(MapsActivity.this, JoinCreate.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent3 = new Intent(MapsActivity.this, SettingsActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+                return false;
+            }
+        });
+
     }
 
 
@@ -329,14 +358,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.setOnMarkerDragListener(new GoogleMap.OnMarkerDragListener() {
             @Override
             public void onMarkerDragStart(Marker arg0) {
-                // TODO Auto-generated method stub
                 Log.d("System out", "onMarkerDragStart..."+arg0.getPosition().latitude+"..."+arg0.getPosition().longitude);
             }
 
             @SuppressWarnings("unchecked")
             @Override
             public void onMarkerDragEnd(Marker arg0) {
-                // TODO Auto-generated method stub
                 Log.d("System out", "onMarkerDragEnd..."+arg0.getPosition().latitude+"..."+arg0.getPosition().longitude);
                 String latty = Double.toString(arg0.getPosition().latitude);
                 String longy = Double.toString(arg0.getPosition().longitude);
@@ -346,7 +373,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             @Override
             public void onMarkerDrag(Marker arg0) {
-                // TODO Auto-generated method stub
                 Log.i("System out", "onMarkerDrag...");
             }
         });
@@ -361,40 +387,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in;
-            switch (item.getItemId()) {
-                case R.id.nav_classes:
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    //return true;
-                    break;
-                case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                //return true;
-                case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), Join.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-            }
-            return false;
-        }
-
-    };
 
     public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
