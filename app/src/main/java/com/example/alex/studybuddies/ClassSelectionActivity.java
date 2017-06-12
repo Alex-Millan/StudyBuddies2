@@ -38,46 +38,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
     private static final String TAG = "LOG_TAG";
 
-    /*private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Intent in = new Intent();
-            switch (item.getItemId()) {
-                case R.id.nav_classes:
-                    in=new Intent(getBaseContext(),ClassSelectionActivity.class);
-                    startActivity(in);
-                    //overridePendingTransition(0, 0);
-
-                    return true;
-                    //item.setChecked(true);
-                    //break;
-                case R.id.nav_map:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    //overridePendingTransition(0, 0);
-                    return true;
-                    //item.setChecked(true);
-                    //break;
-                case R.id.nav_study_mode:
-                    in=new Intent(getBaseContext(), MapsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-                case R.id.nav_settings:
-                    in=new Intent(getBaseContext(), SettingsActivity.class);
-                    startActivity(in);
-                    overridePendingTransition(0, 0);
-                    break;
-            }
-
-            return false;
-        }
-    };*/
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +62,7 @@ public class ClassSelectionActivity extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                     case R.id.nav_study_mode:
-                        Intent intent2 = new Intent(ClassSelectionActivity.this, Join.class);
+                        Intent intent2 = new Intent(ClassSelectionActivity.this, JoinCreate.class);
                         startActivity(intent2);
                         break;
                     case R.id.nav_settings:

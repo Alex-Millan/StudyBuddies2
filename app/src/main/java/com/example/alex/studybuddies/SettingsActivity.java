@@ -62,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
                 return false;
             }
         });
-        
+
         radiusBar = (SeekBar) findViewById(R.id.radiusBar);
         radiusNum = (TextView) findViewById(R.id.radiusNumber);
         radiusNum.setText("Radius: " + radiusBar.getProgress());
