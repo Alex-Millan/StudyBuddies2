@@ -70,6 +70,7 @@ class ClassInfo {
     ClassInfo() {
         //TODO intitalize all global Strings to zero
         studyList = new ArrayList<>();
+        LOADING_FILE = true;
         mStorageRef = FirebaseStorage.getInstance().getReference();
         loc = new Location();
         startTime = new Time("start_time");

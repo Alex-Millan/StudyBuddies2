@@ -31,7 +31,7 @@ public class DataBase {
     DataBase() {
 
         mStorageRef = FirebaseStorage.getInstance().getReference();
-
+        fileRead = false;
         try {
             localFile = File.createTempFile("Empty", "File");
         } catch (IOException e) {
