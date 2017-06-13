@@ -108,7 +108,7 @@ public class AppInfo {
     }
 
     public int getSize(){
-        return courses.size();
+        return instance.courses.size();
     }
 
     public void addStudyGroup(String c, String p, String t) {
@@ -130,7 +130,7 @@ public class AppInfo {
 
 
     public int getHashSize(){
-        return coursesJoined.size();
+        return instance.coursesJoined.size();
     }
 
 
