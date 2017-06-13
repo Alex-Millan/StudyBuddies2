@@ -9,32 +9,27 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginBottom="5dp"
-
-        android:layout_marginLeft="5dp"
+        android:layout_marginLeft="18dp"
         android:layout_marginRight="5dp"
         android:layout_marginTop="5dp"/>
         //android:src="@drawable/testing" />
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="31dp"
         android:text="New Text"
+        android:textSize="15dp"
+        android:layout_marginLeft="25dp"
         android:id="@+id/itemText"
-        android:layout_weight="1" />
+        android:layout_weight="0.03" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit"
-        android:id="@+id/editButton"
-        android:layout_weight="0" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Delete"
         android:id="@+id/deleteButton"
-        android:layout_weight="0" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_marginRight="18dp"
+        android:text="Delete" />
 
 </LinearLayout>
 

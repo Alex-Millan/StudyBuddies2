@@ -24,7 +24,7 @@
             <Button
                 android:id="@+id/andAnotherClassButton"
                 android:layout_width="wrap_content"
-                android:text="Button"
+                android:text="Add Another Class"
                 android:onClick="onClickAddAnotherClass"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -48,7 +48,7 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginRight="8dp"
                 app:layout_constraintRight_toRightOf="parent"
-                android:textSize="30dp"
+                android:textSize="25dp"
                 android:textColor="@color/color_white"
                 app:layout_constraintHorizontal_bias="0.503"
                 tools:layout_editor_absoluteY="15dp" />

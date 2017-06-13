@@ -55,15 +55,13 @@ public class ClassListActivity extends AppCompatActivity {
     private class ListElement {
         ListElement() {};
 
-        ListElement(String tl, String colorID, String ebl, String dbl) {
+        ListElement(String tl, String colorID, String dbl) {
             textLabel = tl;
-            editButtonLabel = ebl;
             colorLabel = colorID;
             deleteButtonLabel = dbl;
         }
 
         public String textLabel;
-        public String editButtonLabel;
         public String colorLabel;
         public String deleteButtonLabel;
     }
@@ -103,9 +101,7 @@ public class ClassListActivity extends AppCompatActivity {
 
             drawCircle(position);
 
-            Button editButton = (Button) newView.findViewById(R.id.editButton);
             tv.setText(w.textLabel);
-            editButton.setText(w.editButtonLabel);
             Button deleteButton = (Button) newView.findViewById(R.id.deleteButton);
             deleteButton.setText(w.deleteButtonLabel);
 
@@ -113,19 +109,6 @@ public class ClassListActivity extends AppCompatActivity {
             tv.setTextColor(Color.rgb(250,250,250));
 
             // Sets a listener for the button, and a tag for the button as well.
-            editButton.setTag(new Integer(position));
-            editButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Reacts to a button press.
-                    String s = v.getTag().toString();
-                    Intent intent = new Intent(ClassListActivity.this, ClassSelectionActivity.class);
-                    intent.putExtra("course", classString);
-                    intent.putExtra("color",colorString);
-                    startActivity(intent);
-                    adapter.notifyDataSetChanged();
-                }
-            });
 
             deleteButton.setTag(new Integer(position));
             deleteButton.setOnClickListener(new View.OnClickListener() {
@@ -171,12 +154,7 @@ public class ClassListActivity extends AppCompatActivity {
 
         myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
         title = (TextView) findViewById(R.id.title);
-        //classText = (TextView) findViewById(R.id.coursesTextView);
-        //colorText = (TextView) findViewById(R.id.colorTextView);
-
         title.setTypeface(myCustomFont);
-        //classText.setTypeface(myCustomFont);
-        //colorText.setTypeface(myCustomFont);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         disableShiftMode(navigation);
@@ -189,18 +167,20 @@ public class ClassListActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_classes:
-                        break;
-                    case R.id.nav_map:
-                        Intent intent1 = new Intent(ClassListActivity.this, MapsActivity.class);
+                        Intent intent1 = new Intent(ClassListActivity.this, ClassSelectionActivity.class);
                         startActivity(intent1);
                         break;
-                    case R.id.nav_study_mode:
-                        Intent intent2 = new Intent(ClassListActivity.this, JoinCreate.class);
+                    case R.id.nav_map:
+                        Intent intent2 = new Intent(ClassListActivity.this, MapsActivity.class);
                         startActivity(intent2);
                         break;
-                    case R.id.nav_settings:
-                        Intent intent3 = new Intent(ClassListActivity.this, SettingsActivity.class);
+                    case R.id.nav_study_mode:
+                        Intent intent3 = new Intent(ClassListActivity.this, JoinCreate.class);
                         startActivity(intent3);
+                        break;
+                    case R.id.nav_settings:
+                        Intent intent4 = new Intent(ClassListActivity.this, SettingsActivity.class);
+                        startActivity(intent4);
                         break;
                 }
                 return false;
@@ -213,7 +193,7 @@ public class ClassListActivity extends AppCompatActivity {
             if(appInfo.courses.get(i).get("course") != "null") {
                 aList.add(new ListElement(
                         appInfo.courses.get(i).get("course"), appInfo.courses.get(i).get("red") + appInfo.courses.get(i).get("blue") +
-                        appInfo.courses.get(i).get("green"), "Edit", "Delete"
+                        appInfo.courses.get(i).get("green"), "Delete"
                 ));
             }
         }
@@ -236,6 +216,7 @@ public class ClassListActivity extends AppCompatActivity {
         String redS = appInfo.courses.get(i).get("red");
         String greenS = appInfo.courses.get(i).get("green");
         String blueS = appInfo.courses.get(i).get("blue");
+        Log.d(TAG,"size: "+appInfo.getSize());
         Log.d(TAG, "index: "+i);
         Log.d(TAG,"R: "+ redS);
         Log.d(TAG,"G: "+ greenS);
@@ -243,7 +224,6 @@ public class ClassListActivity extends AppCompatActivity {
         red = Integer.parseInt(appInfo.courses.get(i).get("red"));
         green = Integer.parseInt(appInfo.courses.get(i).get("green"));
         blue = Integer.parseInt(appInfo.courses.get(i).get("blue"));
-
         paint.setColor(Color.rgb(red, green, blue));
         canvas.drawCircle(50, 50, 30, paint);
         imageView.setImageBitmap(bitmap);
