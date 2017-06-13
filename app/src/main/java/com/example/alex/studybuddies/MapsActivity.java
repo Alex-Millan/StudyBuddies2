@@ -154,7 +154,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.VISIBLE);
 
-        Log.i("YOURMUM   ", "on Location Changed done!" );
+
     }
 
 
