@@ -105,6 +105,22 @@ public class AppInfo {
         instance.courses.remove(i);
         editor.putInt(KEY_COURSE_SIZE, instance.getSize());
         editor.commit();
+        updateInfo();
+    }
+
+    public void updateInfo(){
+        SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        for(int i = 0; i < instance.getSize(); i++){
+
+            //Saves the data into the phone even after we close the app
+            editor.putString(KEY_COURSE + i, instance.courses.get(i).get(KEY_COURSE));
+            editor.putString(KEY_RED + i,  instance.courses.get(i).get(KEY_RED));
+            editor.putString(KEY_GREEN + i,  instance.courses.get(i).get(KEY_GREEN));
+            editor.putString(KEY_BLUE + i,  instance.courses.get(i).get(KEY_BLUE));
+            editor.commit();
+        }
     }
 
     public int getSize(){
@@ -145,7 +161,22 @@ public class AppInfo {
         instance.coursesJoined.remove(i);
         editor.putInt(KEY_JOINED_SIZE, instance.getHashSize());
         editor.commit();
+        updateHashInfo();
 
+    }
+
+    public void updateHashInfo(){
+        SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        for(int i = 0; i < instance.getHashSize(); i++){
+
+            //Saves the data into the phone even after we close the app
+            editor.putString(KEY_JOINED + i, instance.coursesJoined.get(i).get(KEY_JOINED));
+            editor.putString(KEY_POSITION + i,  instance.coursesJoined.get(i).get(KEY_POSITION));
+            editor.putString(KEY_TIME + i,  instance.coursesJoined.get(i).get(KEY_TIME));
+            editor.commit();
+        }
     }
 
 }
