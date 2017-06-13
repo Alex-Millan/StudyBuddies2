@@ -162,7 +162,6 @@ public class AppInfo {
         editor.putInt(KEY_JOINED_SIZE, instance.getHashSize());
         editor.commit();
         updateHashInfo();
-
     }
 
     public void updateHashInfo(){
