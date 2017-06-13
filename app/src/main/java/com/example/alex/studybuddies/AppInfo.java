@@ -72,7 +72,7 @@ public class AppInfo {
     }
 
     public void addClass(String myCourse, String red, String green, String blue) {
-        int i = instance.courses.size()-1;
+        int i = instance.courses.size();
         SharedPreferences settings = my_context.getSharedPreferences(MainActivity.MYPREFS, 0);
         SharedPreferences.Editor editor = settings.edit();
 
@@ -85,7 +85,7 @@ public class AppInfo {
         //Stores the data into the current loaded app
         HashMap<String, String> temp = new HashMap<>();
         temp.put(KEY_COURSE, myCourse);
-        temp.put(KEY_RED, myCourse);
+        temp.put(KEY_RED, red);
         temp.put(KEY_GREEN, green);
         temp.put(KEY_BLUE, blue);
         instance.courses.add(temp);

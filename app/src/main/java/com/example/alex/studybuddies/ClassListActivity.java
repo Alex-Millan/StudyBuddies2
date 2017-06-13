@@ -2,6 +2,7 @@ package com.example.alex.studybuddies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -45,6 +46,11 @@ public class ClassListActivity extends AppCompatActivity {
 
     String classString;
     String colorString;
+    ImageView imageView;
+    AppInfo appInfo;
+    TextView title;
+
+   Typeface myCustomFont;
 
     private class ListElement {
         ListElement() {};
@@ -93,39 +99,18 @@ public class ClassListActivity extends AppCompatActivity {
 
             // Fills in the view.
             TextView tv = (TextView) newView.findViewById(R.id.itemText);
-            ImageView imageView = (ImageView) newView.findViewById(R.id.icon);
+            imageView = (ImageView) newView.findViewById(R.id.icon);
 
-            Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
-            Canvas canvas = new Canvas(bitmap);
-            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            if(colorString.equals("Red")) {
-                paint.setColor(Color.rgb(234,51,12));
-            }
-            else if(colorString.equals("Orange")) {
-                paint.setColor(Color.rgb(242,146,44));
-            }
-            else if(colorString.equals("Yellow")) {
-                paint.setColor(Color.rgb(245,241,27));
-            }
-            else if(colorString.equals("Green")) {
-                paint.setColor(Color.rgb(99,240,13));
-            }
-            else if(colorString.equals("Blue")) {
-                paint.setColor(Color.rgb(13,85,240));
-            }
-            else if(colorString.equals("Purple")) {
-                paint.setColor(Color.rgb(175,13,240));
-            }
-
-            canvas.drawCircle(50, 50, 30, paint);
-            imageView.setImageBitmap(bitmap);
-
+            drawCircle(position);
 
             Button editButton = (Button) newView.findViewById(R.id.editButton);
             tv.setText(w.textLabel);
             editButton.setText(w.editButtonLabel);
             Button deleteButton = (Button) newView.findViewById(R.id.deleteButton);
             deleteButton.setText(w.deleteButtonLabel);
+
+            tv.setTypeface(myCustomFont);
+            tv.setTextColor(Color.rgb(250,250,250));
 
             // Sets a listener for the button, and a tag for the button as well.
             editButton.setTag(new Integer(position));
@@ -149,12 +134,13 @@ public class ClassListActivity extends AppCompatActivity {
                     // Reacts to a button press.
                     // Gets the integer tag of the button.
                     String s = v.getTag().toString();
-                    int duration = Toast.LENGTH_SHORT;
-                    Toast toast = Toast.makeText(context, s, duration);
-                    toast.show();
+                    //int duration = Toast.LENGTH_SHORT;
+                    //Toast toast = Toast.makeText(context, s, duration);
+                    //toast.show();
                     // Let's remove the list item.
                     int i = Integer.parseInt(s);
                     aList.remove(i);
+                    appInfo.delete(i);
                     adapter.notifyDataSetChanged();
                 }
             });
@@ -181,6 +167,16 @@ public class ClassListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_class_list);
+        appInfo = AppInfo.getInstance(this);
+
+        myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        title = (TextView) findViewById(R.id.title);
+        //classText = (TextView) findViewById(R.id.coursesTextView);
+        //colorText = (TextView) findViewById(R.id.colorTextView);
+
+        title.setTypeface(myCustomFont);
+        //classText.setTypeface(myCustomFont);
+        //colorText.setTypeface(myCustomFont);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         disableShiftMode(navigation);
@@ -213,16 +209,14 @@ public class ClassListActivity extends AppCompatActivity {
 
         aList = new ArrayList<>();
 
-        Bundle extras = getIntent().getExtras();
-        if (extras.getString("course") != null) {
-            classString = extras.getString("course");
-            //aList.add(classString);
+        for(int i = 0; i < appInfo.getSize(); i++) {
+            if(appInfo.courses.get(i).get("course") != "null") {
+                aList.add(new ListElement(
+                        appInfo.courses.get(i).get("course"), appInfo.courses.get(i).get("red") + appInfo.courses.get(i).get("blue") +
+                        appInfo.courses.get(i).get("green"), "Edit", "Delete"
+                ));
+            }
         }
-        if (extras.getString("color") != null) {
-            colorString = extras.getString("color");
-        }
-
-        aList.add(new ListElement(classString, colorString, "Edit", "Delete"));
 
 
         adapter = new MyAdapter(this, R.layout.class_list_layout, aList);
@@ -232,10 +226,31 @@ public class ClassListActivity extends AppCompatActivity {
     }
 
 
-    public void onClickAddClass(View view) {
+    public void drawCircle(int i) {
+        int red;
+        int green;
+        int blue;
+        Bitmap bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        String redS = appInfo.courses.get(i).get("red");
+        String greenS = appInfo.courses.get(i).get("green");
+        String blueS = appInfo.courses.get(i).get("blue");
+        Log.d(TAG, "index: "+i);
+        Log.d(TAG,"R: "+ redS);
+        Log.d(TAG,"G: "+ greenS);
+        Log.d(TAG,"B: "+ blueS);
+        red = Integer.parseInt(appInfo.courses.get(i).get("red"));
+        green = Integer.parseInt(appInfo.courses.get(i).get("green"));
+        blue = Integer.parseInt(appInfo.courses.get(i).get("blue"));
+
+        paint.setColor(Color.rgb(red, green, blue));
+        canvas.drawCircle(50, 50, 30, paint);
+        imageView.setImageBitmap(bitmap);
+    }
+
+    public void onClickAddAnotherClass(View view) {
         Intent intent = new Intent(ClassListActivity.this, ClassSelectionActivity.class);
-        intent.putExtra("course", classString);
-        intent.putExtra("color",colorString);
         startActivity(intent);
     }
 

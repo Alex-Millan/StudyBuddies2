@@ -54,7 +54,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
         myCourseList = new CourseList(this);
         appInfo = AppInfo.getInstance(this);
 
-
         final Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
         title = (TextView) findViewById(R.id.title);
         classText = (TextView) findViewById(R.id.coursesTextView);
@@ -96,14 +95,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
         colorDropdown = (Spinner) findViewById(R.id.colorSpinner);
-
-        /*Bundle extras = getIntent().getExtras();
-        if (extras.getString("course") != null) {
-            String classString = extras.getString("course");
-        }
-        if (extras.getString("color") != null) {
-            String colorString = extras.getString("color");
-        }*/
 
         String[] list = new String[myCourseList.getSize()+1];
         int totalSize = myCourseList.getSize();
