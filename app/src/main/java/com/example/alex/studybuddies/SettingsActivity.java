@@ -1,6 +1,7 @@
 package com.example.alex.studybuddies;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.media.audiofx.BassBoost;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +26,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private SeekBar radiusBar;
     private TextView radiusNum;
+    TextView title;
+    TextView radiusText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(intent2);
                         break;
                     case R.id.nav_study_mode:
-                        Intent intent3 = new Intent(SettingsActivity.this, Join.class);
+                        Intent intent3 = new Intent(SettingsActivity.this, JoinCreate.class);
                         startActivity(intent3);
                         break;
                     case R.id.nav_settings:
@@ -63,6 +66,14 @@ public class SettingsActivity extends AppCompatActivity {
         radiusBar = (SeekBar) findViewById(R.id.radiusBar);
         radiusNum = (TextView) findViewById(R.id.radiusNumber);
         radiusNum.setText("Radius: " + radiusBar.getProgress());
+        title = (TextView) findViewById(R.id.title);
+        radiusText = (TextView) findViewById(R.id.radiusText);
+
+        final Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        radiusNum.setTypeface(myCustomFont);
+        radiusText.setTypeface(myCustomFont);
+        title.setTypeface(myCustomFont);
+
         radiusBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             int progress = 0;
             @Override
@@ -77,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                radiusNum.setText("Radius: " + radiusBar.getProgress());
+                radiusNum.setText("Radius: " + radiusBar.getProgress() + " miles");
             }
         });
     }

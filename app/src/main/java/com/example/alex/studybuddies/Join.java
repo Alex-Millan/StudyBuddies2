@@ -40,6 +40,7 @@ public class Join extends AppCompatActivity{
     private static final String LOG_TAG = "lv-ex";
     AppInfo appInfo;
 
+
     private class ListElement {
         ListElement() {};
 

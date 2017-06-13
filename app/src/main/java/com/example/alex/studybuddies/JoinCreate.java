@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.lang.reflect.Field;
 
@@ -20,11 +21,18 @@ public class JoinCreate extends AppCompatActivity {
 
 //    Button joinButt, createButt;
 //    Typeface tfChalk, tfWhite;
+    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join_create);
+
+        final Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        title = (TextView) findViewById(R.id.title);
+        title.setTypeface(myCustomFont);
+
+
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         disableShiftMode(navigation);

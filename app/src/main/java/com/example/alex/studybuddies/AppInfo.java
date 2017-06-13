@@ -119,8 +119,8 @@ public class AppInfo {
             editor.putString(KEY_RED + i,  instance.courses.get(i).get(KEY_RED));
             editor.putString(KEY_GREEN + i,  instance.courses.get(i).get(KEY_GREEN));
             editor.putString(KEY_BLUE + i,  instance.courses.get(i).get(KEY_BLUE));
-            editor.commit();
         }
+        editor.commit();
     }
 
     public int getSize(){
@@ -174,8 +174,8 @@ public class AppInfo {
             editor.putString(KEY_JOINED + i, instance.coursesJoined.get(i).get(KEY_JOINED));
             editor.putString(KEY_POSITION + i,  instance.coursesJoined.get(i).get(KEY_POSITION));
             editor.putString(KEY_TIME + i,  instance.coursesJoined.get(i).get(KEY_TIME));
-            editor.commit();
         }
+        editor.commit();
     }
 
 }

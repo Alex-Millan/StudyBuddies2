@@ -19,6 +19,7 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import android.widget.TextView;
+import android.widget.Button;
 
 
 public class ClassSelectionActivity extends AppCompatActivity {
@@ -32,7 +33,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
     Spinner coursesDropdown;
     Spinner colorDropdown;
     String[] subjectItems;
-    String selectedCourseNumber;
     String selectedClass;
     String selectedColor;
 
@@ -53,6 +53,9 @@ public class ClassSelectionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_selection);
         myCourseList = new CourseList(this);
         appInfo = AppInfo.getInstance(this);
+
+        Button addClassButton = (Button) findViewById(R.id.addClassButton);
+        //addClassButton.setBackgroundResource(R.drawable.chalk);
 
         final Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
         title = (TextView) findViewById(R.id.title);
@@ -119,7 +122,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coursesDropdown.setAdapter(adapter1);
         coursesDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 selectedClass = adapterView.getItemAtPosition(i).toString();
                 ((TextView) adapterView.getChildAt(0)).setTextColor(Color.rgb(250,250,250));
@@ -232,5 +234,10 @@ public class ClassSelectionActivity extends AppCompatActivity {
             startActivity(intent);
         }
         appInfo.addClass(selectedClass,rValue,gValue,bValue);
+    }
+
+    public void onClickCurrentClass(View view) {
+        Intent intent2 = new Intent(ClassSelectionActivity.this, ClassListActivity.class);
+        startActivity(intent2);
     }
 }
