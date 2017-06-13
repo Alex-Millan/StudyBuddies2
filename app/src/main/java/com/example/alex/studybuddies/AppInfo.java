@@ -2,6 +2,7 @@ package com.example.alex.studybuddies;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -113,7 +114,6 @@ public class AppInfo {
         SharedPreferences.Editor editor = settings.edit();
 
         for(int i = 0; i < instance.getSize(); i++){
-
             //Saves the data into the phone even after we close the app
             editor.putString(KEY_COURSE + i, instance.courses.get(i).get(KEY_COURSE));
             editor.putString(KEY_RED + i,  instance.courses.get(i).get(KEY_RED));
@@ -142,6 +142,7 @@ public class AppInfo {
         instance.coursesJoined.add(tempClass);
         editor.putInt(KEY_JOINED_SIZE, instance.getHashSize());
         editor.commit();
+        Log.i("YOURMUM   ", "Added " + tempClass.toString() + " to app info \n position: " + i );
     }
 
 

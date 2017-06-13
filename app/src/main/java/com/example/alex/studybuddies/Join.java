@@ -108,7 +108,7 @@ public class Join extends AppCompatActivity{
                     aList.remove(i);
                     appInfo.deleteHash(i);
                     aa.notifyDataSetChanged();
-                    Refresh();
+
                 }
             });
 
@@ -123,7 +123,7 @@ public class Join extends AppCompatActivity{
                     Toast toast = Toast.makeText(context, s, duration);
                     toast.show();
                     String i[] = s.split(" ");
-                    int index = Integer.parseInt(i[1]);
+                    int index = Integer.parseInt(i[1])-1;
                     String temp = appInfo.coursesJoined.get(index).get("position");
                     ChangetoMaps(temp);
 
@@ -134,11 +134,6 @@ public class Join extends AppCompatActivity{
         }
     }
 
-    public void Refresh(){
-        Intent intent = new Intent(this, Join.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 
     public void ChangetoMaps(String location){
         Intent intent2 = new Intent(this, MapsActivity.class);
