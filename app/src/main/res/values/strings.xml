@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">DataBaseDemo</string>
+    <string name="app_name">StudyBuddies</string>
     <string name="SignUP">Sign Up</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
