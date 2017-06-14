@@ -123,6 +123,7 @@ public class Join extends AppCompatActivity{
             // Set a listener for the whole list item.
             newView.setTag(w.textLabel);
             newView.setTag(w.textLabel2);
+            newView.setTag(new Integer(position));
             newView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -130,8 +131,9 @@ public class Join extends AppCompatActivity{
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, s, duration);
                     toast.show();
-                    String i[] = s.split(" ");
-                    int index = Integer.parseInt(i[1])-1;
+                    int index = Integer.parseInt(s);
+
+                    Log.i("STEPHRULES", "index is: " + index);
                     String temp = appInfo.coursesJoined.get(index).get("position");
                     ChangetoMaps(temp);
 
@@ -168,8 +170,11 @@ public class Join extends AppCompatActivity{
         appInfo = AppInfo.getInstance(this);
         for (int i = 1; i < appInfo.getHashSize(); i++) {
             if(appInfo.coursesJoined.get(i).get("course_joined") != "null") {
+                String tempTime = appInfo.coursesJoined.get(i).get("time");
+                String splitTime[] = tempTime.split(" ");
+                String showTime = (splitTime[0]);
                 aList.add(new ListElement(
-                        appInfo.coursesJoined.get(i).get("course_joined"), appInfo.coursesJoined.get(i).get("time"), "Delete"
+                        appInfo.coursesJoined.get(i).get("course_joined"), showTime, "Delete"
                 ));
             }
         }

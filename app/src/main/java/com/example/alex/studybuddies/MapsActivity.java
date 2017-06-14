@@ -227,7 +227,7 @@ public void loadMap(ClassInfo class1){
             hour2 -= 12;
         }
         markerOptions.snippet(hour1 + ":" + minute + "-"
-                + hour2 + ":" + minute2 + " " + i);
+                + hour2 + ":" + minute2);
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
     }
