@@ -152,6 +152,7 @@ public class ClassListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_class_list);
         appInfo = AppInfo.getInstance(this);
 
+
         myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
         title = (TextView) findViewById(R.id.title);
         title.setTypeface(myCustomFont);
