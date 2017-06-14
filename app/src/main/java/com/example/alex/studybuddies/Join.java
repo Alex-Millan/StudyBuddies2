@@ -96,7 +96,7 @@ public class Join extends AppCompatActivity{
             tv.setText(w.textLabel);
             tv2.setText(w.textLabel2);
             b.setText(w.buttonLabel);
-            
+
             tv.setTypeface(myCustomFont);
             tv.setTextColor(Color.rgb(250,250,250));
 
