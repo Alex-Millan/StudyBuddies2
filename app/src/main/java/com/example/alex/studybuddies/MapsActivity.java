@@ -195,13 +195,13 @@ public void loadMap(ClassInfo class1){
     Log.i("YOURMUM   ", "LoadMap Called");
 
     //Place current location marker
-
+    int red = Integer.parseInt(appInfo.courses.get(current_course).get("red"));
+    int green = Integer.parseInt(appInfo.courses.get(current_course).get("green"));
+    int blue = Integer.parseInt(appInfo.courses.get(current_course).get("blue"));
+    int hue = getHue(red,green,blue);
     LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
     MarkerOptions markerOptions = new MarkerOptions();
     markerOptions.position(latLng);
-    markerOptions.title("Current Position " + class1.getCourseSize());
-    markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-    mCurrLocationMarker = mMap.addMarker(markerOptions);
     //move map camera
     //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
     //mMap.animateCamera(CameraUpdateFactory.zoomTo(20)); //change number to change radius
@@ -216,11 +216,9 @@ public void loadMap(ClassInfo class1){
     if (flag == true) {
         ViewClass(change.getString("location"));
     } else {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 15));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 2000, null);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLatitude, currentLongitude), 14));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 2000, null);
     }
-    //ClassInfo class1 = new ClassInfo();
-    //class1.getCourse("Abigail"); //Initialize the course list to read from
     for (int i = 0; i < class1.getCourseSize(); i++) {
         int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
         LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
@@ -241,7 +239,7 @@ public void loadMap(ClassInfo class1){
         }
         markerOptions.snippet(hour1 + ":" + minute + "-"
                 + hour2 + ":" + minute2);
-        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        markerOptions.icon(BitmapDescriptorFactory.defaultMarker(hue));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
     }
     current_course++;
@@ -457,6 +455,28 @@ public void loadMap(ClassInfo class1){
         } catch (IllegalAccessException e) {
             //Log.e("BNVHelper", "Unable to change value of shift mode", e);
         }
+    }
+
+    public int getHue(int red, int green, int blue) {
+
+        float min = Math.min(Math.min(red, green), blue);
+        float max = Math.max(Math.max(red, green), blue);
+
+        float hue = 0f;
+        if (max == red) {
+            hue = (green - blue) / (max - min);
+
+        } else if (max == green) {
+            hue = 2f + (blue - red) / (max - min);
+
+        } else {
+            hue = 4f + (red - green) / (max - min);
+        }
+
+        hue = hue * 60;
+        if (hue < 0) hue = hue + 360;
+
+        return Math.round(hue);
     }
 }
 
