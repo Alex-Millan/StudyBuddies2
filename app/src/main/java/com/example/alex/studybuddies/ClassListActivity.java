@@ -50,7 +50,7 @@ public class ClassListActivity extends AppCompatActivity {
     AppInfo appInfo;
     TextView title;
 
-   Typeface myCustomFont;
+    Typeface myCustomFont;
 
     private class ListElement {
         ListElement() {};

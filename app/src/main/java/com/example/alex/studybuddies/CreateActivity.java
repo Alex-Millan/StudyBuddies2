@@ -23,6 +23,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.util.Log;
+import java.lang.String;
 
 // DropDown
 import android.app.Dialog;
@@ -35,6 +37,7 @@ import android.app.AlertDialog;
 import java.io.FileNotFoundException;
 import java.lang.String;
 import java.lang.reflect.Field;
+import java.util.HashMap;
 
 public class CreateActivity extends AppCompatActivity {
 
@@ -47,7 +50,7 @@ public class CreateActivity extends AppCompatActivity {
     Typeface myCustomFont;
 
     // DropDown
-    private Spinner spinner1, spinner2;
+    private Spinner spinner1;
     private Button btnSubmit;
     String course;
 
@@ -76,6 +79,7 @@ public class CreateActivity extends AppCompatActivity {
 
     //AppInfo
     AppInfo appInfo;
+    int numClassesJoined;
 //    int numberOfClasses = appInfo.getSize();
     //String i = appInfo.get(i).get("course");
 
@@ -172,8 +176,23 @@ public class CreateActivity extends AppCompatActivity {
 //    }
 
     public void addListenerOnSpinnerItemSelection() {
+
         spinner1 = (Spinner) findViewById(R.id.spinner1);
-//        spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+
+        int i;
+        int numClassesJoined = appInfo.courses.size();
+        String[] classArray = new String[numClassesJoined];
+
+
+        if(numClassesJoined > 0) {
+
+            for (i = 0; i < numClassesJoined; i++) {
+                classArray[i] = appInfo.courses.get(i).get("course");
+            }
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, classArray);
+        spinner1.setAdapter(adapter);
     }
 
 
