@@ -76,6 +76,7 @@ class ClassInfo {
         startTime = new Time("start_time");
         endTime = new Time("end_time");
         updateFile = new DataBase();
+        courseName = "";
     }
 
 
@@ -90,6 +91,7 @@ class ClassInfo {
     public boolean isLOADING_FILE(){
         return LOADING_FILE;
     }
+
 
     public void loadCourse() {
         String jsonFile = this.getStudyTimes();
@@ -130,6 +132,9 @@ class ClassInfo {
         return studyList.size();
     }
 
+    public String getCourseName(){
+        return course_info;
+    }
     public String getStudyTimes(){
         String json = null;
 

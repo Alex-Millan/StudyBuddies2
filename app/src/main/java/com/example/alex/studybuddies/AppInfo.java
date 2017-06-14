@@ -22,7 +22,7 @@ public class AppInfo {
     // Here are some values we want to keep global.
     public static ArrayList<HashMap<String, String>> courses = new ArrayList<>();
     public static ArrayList<HashMap<String, String>> coursesJoined = new ArrayList<>();
-    private final static String KEY_COURSE= "course";
+    public final static String KEY_COURSE= "course";
     private final static String KEY_RED = "red";
     private final static String KEY_BLUE = "blue";
     private final static String KEY_GREEN = "green";

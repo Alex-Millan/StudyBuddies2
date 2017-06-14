@@ -143,14 +143,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGoogleApiClient.connect();
     }
 
+    String[] course_Name;
+    int current_course;
     @Override
     public void onLocationChanged(Location location) {
         mLastLocation = location;
         Log.i("YOURMUM   ", "on Location Changed called!" );
-        ClassInfo class1 = new ClassInfo();
-        class1.getCourse("Abigail"); //Initialize the course list to read from
-        file_loaded mTask; mTask = new file_loaded();
-        mTask.execute(class1,class1,class1);
+        ClassInfo[] myClass = new ClassInfo[appInfo.getSize()];
+        course_Name = new String[appInfo.getSize()];
+        current_course = 0;
+        for (int i = 0; i < appInfo.getSize(); i++) {
+            myClass[i] = new ClassInfo();
+            String temp = appInfo.courses.get(i).get(AppInfo.KEY_COURSE);
+            course_Name[i] =  temp;
+
+            myClass[i].getCourse(temp);
+            new file_loaded().execute(myClass[i],myClass[i],myClass[i]);
+            Log.i("YOURMUM   ", "grabbing course: " + temp);
+        }
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.indeterminateBar);
         progressBar.setVisibility(View.VISIBLE);
 
@@ -182,6 +192,8 @@ public void loadMap(ClassInfo class1){
     if (mCurrLocationMarker != null) {
         mCurrLocationMarker.remove();
     }
+    Log.i("YOURMUM   ", "LoadMap Called");
+
     //Place current location marker
 
     LatLng latLng = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
@@ -213,7 +225,8 @@ public void loadMap(ClassInfo class1){
         int start = class1.startTime.getHour(i); // Returns the hour of the first item in the list
         LatLng position = new LatLng(class1.loc.getLatitude(i), class1.loc.getLongitude(i));
         markerOptions.position(position);
-        markerOptions.title("Study Room  " + i);
+        markerOptions.title(course_Name[current_course] );
+
         int hour1 = class1.startTime.getHour(i);
         int hour2 = class1.endTime.getHour(i);
         int myMin = class1.startTime.getMinute(i);
@@ -231,6 +244,7 @@ public void loadMap(ClassInfo class1){
         markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
         mCurrLocationMarker = mMap.addMarker(markerOptions);
     }
+    current_course++;
 
     boolean startDrag = false;
     Bundle CreateActivity = getIntent().getExtras();
