@@ -13,6 +13,7 @@ import java.util.Random;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,6 +40,7 @@ import android.widget.Toast;
 public class Join extends AppCompatActivity{
 
     TextView title;
+    Typeface myCustomFont;
 
     private static final String LOG_TAG = "lv-ex";
     AppInfo appInfo;
@@ -94,6 +96,9 @@ public class Join extends AppCompatActivity{
             tv.setText(w.textLabel);
             tv2.setText(w.textLabel2);
             b.setText(w.buttonLabel);
+            
+            tv.setTypeface(myCustomFont);
+            tv.setTextColor(Color.rgb(250,250,250));
 
             // Sets a listener for the button, and a tag for the button as well.
             b.setTag(new Integer(position));
