@@ -24,7 +24,7 @@
                 android:id="@+id/joinButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Join"
+                android:text="Joined Study Groups"
                 android:onClick="goToJoin"
                 android:layout_marginLeft="8dp"
                 app:layout_constraintLeft_toLeftOf="parent"
