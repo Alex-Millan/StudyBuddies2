@@ -280,7 +280,6 @@ public class CreateActivity extends AppCompatActivity {
 
         // EditText
         edit = (EditText) findViewById(R.id.editText);
-//        text = (TextView) findViewById(R.id.textView);
 
         btnSubmit.setOnClickListener(new OnClickListener() {
 
@@ -289,28 +288,28 @@ public class CreateActivity extends AppCompatActivity {
 
                 // getting text from edittext
                 name = edit.getText().toString();
-
                 if(name.equals("")){
                     name = "No Description";
                 }
 
-//                text.setText(name);
+                // Getting class
                 course = String.valueOf(spinner1.getSelectedItem());
 
-
-                // ClassInfo
-                String tempCourse = "AMS 10";
                 // Temp long and lat values
                 String lat = latty;
                 String longi = longy;
 
+                // Send hour and minute to database
+                int startTime = (hour_1 * 60) + minute_1;
+                int endTime = (hour_2 * 60) + minute_2;
+                String startTimeString = Integer.toString(startTime);
+                String endTimeString = Integer.toString(endTime);
+
                 try {
-                    classStuff.update(tempCourse, lat, longi, displayTime1, displayTime2, name);
+                    classStuff.update(course, lat, longi, startTimeString, endTimeString, name);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
-
-//                (String course, String lat, String longi, String startTime, String endTime, String desc)
 
 
                 Toast.makeText(CreateActivity.this,
