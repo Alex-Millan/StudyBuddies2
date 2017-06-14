@@ -13,6 +13,7 @@ import java.util.Random;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
@@ -36,6 +37,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class Join extends AppCompatActivity{
+
+    TextView title;
 
     private static final String LOG_TAG = "lv-ex";
     AppInfo appInfo;
@@ -149,6 +152,9 @@ public class Join extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
+        title = (TextView) findViewById(R.id.title);
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        title.setTypeface(myCustomFont);
         aList = new ArrayList<ListElement>();
         aa = new MyAdapter(this, R.layout.list_element, aList);
         ListView myListView = (ListView) findViewById(R.id.listView);

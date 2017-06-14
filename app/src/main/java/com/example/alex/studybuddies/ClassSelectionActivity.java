@@ -117,7 +117,6 @@ public class ClassSelectionActivity extends AppCompatActivity {
 
         coursesDropdown = (Spinner) findViewById(R.id.coursesSpinner);
         subjectItems = list;
-
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, subjectItems);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         coursesDropdown.setAdapter(adapter1);

@@ -1,5 +1,7 @@
 package com.example.alex.studybuddies;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
@@ -12,6 +14,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.view.View;
@@ -33,6 +37,14 @@ import java.lang.String;
 import java.lang.reflect.Field;
 
 public class CreateActivity extends AppCompatActivity {
+
+    TextView title;
+    TextView classText;
+    TextView startText;
+    TextView endText;
+    TextView locationText;
+
+    Typeface myCustomFont;
 
     // DropDown
     private Spinner spinner1, spinner2;
@@ -72,6 +84,19 @@ public class CreateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create);
 
+        Typeface myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+        title = (TextView) findViewById(R.id.title);
+        classText = (TextView) findViewById(R.id.classTextView);
+        startText = (TextView) findViewById(R.id.startTimeTextView);
+        endText = (TextView) findViewById(R.id.endTimeTextView);
+        locationText = (TextView) findViewById(R.id.locationTextView);
+
+        title.setTypeface(myCustomFont);
+        classText.setTypeface(myCustomFont);
+        startText.setTypeface(myCustomFont);
+        endText.setTypeface(myCustomFont);
+        locationText.setTypeface(myCustomFont);
+
         latty = "null";
         longy = "null";
         Bundle change = getIntent().getExtras();
@@ -92,8 +117,10 @@ public class CreateActivity extends AppCompatActivity {
         // ClassInfo
         classStuff = new ClassInfo();
 
+        myCustomFont = Typeface.createFromAsset(getAssets(),"ChalkDust.ttf");
+
         // AppInfo
-        //appInfo = AppInfo.getInstance(this);
+        appInfo = AppInfo.getInstance(this);
 
         // Navigation
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
